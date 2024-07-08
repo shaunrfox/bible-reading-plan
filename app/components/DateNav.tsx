@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 
 type DateNavProps = {
   date: Date;
@@ -12,6 +12,7 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "UTC",
     }).format(date);
   };
 
@@ -30,7 +31,11 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
   const previousDay = getPreviousDay(date);
   const nextDay = getNextDay(date);
 
-  const formatUrlDate = (date: Date) => {
+  const formatUrlDate = (date: Date | string) => {
+    if (typeof date === "string") {
+      return date;
+    }
+
     return date.toISOString().split("T")[0];
   };
 
