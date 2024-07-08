@@ -5,7 +5,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import "./tailwind.css";
+import "./style.css";
+import "./nlt-style.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,7 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body style={{ margin: 0, padding: 0 }}>
         {children}
         <ScrollRestoration />
         <Scripts />
