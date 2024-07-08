@@ -5,8 +5,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import "./style.css";
-import "./nlt-style.css";
+import "./style/style.css";
+import "./style/nlt-style.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

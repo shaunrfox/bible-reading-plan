@@ -1,4 +1,3 @@
-// utils/formatReference.js
 export function formatReference(reference) {
 	const bookMapping = {
 		'Genesis': 'Gen', 'Exodus': 'Exod', 'Leviticus': 'Lev', 'Numbers': 'Num', 'Deuteronomy': 'Deut',
