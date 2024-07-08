@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "@remix-run/react";
 import ArrowLeft from "../icons/ArrowLeft";
+import ArrowRight from "../icons/ArrowRight";
+import Box from "../Box";
+import Heading from "../Heading";
+import theme from "~/utils/theme";
 
 type DateNavProps = {
   date: Date;
@@ -52,30 +56,52 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
   };
 
   return (
-    <nav
+    <Box
+      as="nav"
       className="date-nav"
-      style={{
+      sx={{
         display: "flex",
         alignItems: "center",
-        gap: "1rem",
-        padding: "1rem",
+        justifyContent: "center",
+        gap: theme.space[6],
+        p: theme.space[6],
+        bg: theme.colors.gray[5],
+        borderRadius: theme.radii[4],
+        marginBottom: theme.space[10],
       }}
     >
-      <Link to={`/${formatUrlDate(previousDay)}`}>
-        <ArrowLeft />
-      </Link>
-      <h2
+      <Link
+        to={`/${formatUrlDate(previousDay)}`}
         style={{
-          fontSize: "1.25rem",
-          fontFamily: "monospace",
+          borderStyle: "solid",
+          borderWidth: "1px",
+          borderRadius: theme.radii[3],
+        }}
+      >
+        <ArrowLeft sx={{ fill: "currentcolor" }} />
+      </Link>
+      <Heading
+        as={"h2"}
+        level={4}
+        font="mono"
+        sx={{
           textTransform: "uppercase",
           letterSpacing: "1px",
         }}
       >
         {formatDate(date)}
-      </h2>
-      <Link to={`/${formatUrlDate(nextDay)}`}>&rarr;</Link>
-    </nav>
+      </Heading>
+      <Link
+        to={`/${formatUrlDate(nextDay)}`}
+        style={{
+          borderStyle: "solid",
+          borderWidth: "1px",
+          borderRadius: theme.radii[3],
+        }}
+      >
+        <ArrowRight sx={{ fill: "currentcolor" }} />
+      </Link>
+    </Box>
   );
 };
 

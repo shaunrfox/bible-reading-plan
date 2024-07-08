@@ -56,7 +56,9 @@ const theme = makeTheme({
     },
   },
   fonts: {
-    default: '"Source Sans Pro", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    default: '"Source Sans 3", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    mono: '"Source Code Pro", "Roboto Mono", Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", monospace',
+    '@import': "url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap')",
   },
   fontSizes: {
     1: '0.625rem',

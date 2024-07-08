@@ -4,7 +4,47 @@ import { fetchDailyReadings } from "~/utils/api";
 // import { fetchScripture } from "~/utils/nltApi";
 // import { formatReference } from "~/utils/formatReference";
 import AppHeader from "~/components/AppHeader/index";
+import Box from "~/components/Box";
 import DateNav from "~/components/DateNav/index";
+import Heading from "~/components/Heading";
+import Text from "~/components/Text";
+import theme from "~/utils/theme";
+import Rule from "~/components/Rule";
+
+// const NavItem = styled("li")`
+//   display: block;
+// `;
+
+export function ReadingItem({
+  label,
+  reference,
+}: {
+  label: string;
+  reference: string;
+}) {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        paddingBottom: theme.space[6],
+      }}
+    >
+      <Text
+        level={2}
+        sx={{
+          textTransform: "uppercase",
+          fontWeight: theme.fontWeights.bold,
+          letterSpacing: theme.space[1],
+          color: theme.colors.mint[40],
+        }}
+      >
+        {label}
+      </Text>
+      <Text level={5}>{reference}</Text>
+    </Box>
+  );
+}
 
 export const loader: LoaderFunction = async ({
   params,
@@ -56,51 +96,78 @@ export default function DatePage() {
   console.log(new Date(date));
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
       <AppHeader season={data.fetchedData.calendarDate.season.name} />
       <DateNav date={new Date(date)} />
-      <section
-        style={{
+      <Box
+        as="section"
+        sx={{
           display: "flex",
-          flexDirection: "column",
-          padding: "1.5rem",
+          justifyContent: "center",
+          gap: theme.space[8],
+          width: "100%",
         }}
       >
-        <h2>Morning Prayer</h2>
-        <div>
-          <h3>The Psalms</h3>
-          <p>{morning_scripture[0].full.citation}</p>
-        </div>
-        <div>
-          <h3>Reading 1</h3>
-          <p>{morning_scripture[1].full.citation}</p>
-        </div>
-        <div>
-          <h3>Reading 2</h3>
-          <p>{morning_scripture[2].full.citation}</p>
-        </div>
-      </section>
-      <section
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          padding: "1.5rem",
-        }}
-      >
-        <h2>Evening Prayer</h2>
-        <div>
-          <h3>The Psalms</h3>
-          <p>{evening_scripture[0].full.citation}</p>
-        </div>
-        <div>
-          <h3>Reading 1</h3>
-          <p>{evening_scripture[1].full.citation}</p>
-        </div>
-        <div>
-          <h3>Reading 2</h3>
-          <p>{evening_scripture[2].full.citation}</p>
-        </div>
-      </section>
-    </div>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            maxWidth: "300px",
+            padding: theme.space[8],
+          }}
+        >
+          <Heading as="h3" level={3}>
+            Morning Prayer
+          </Heading>
+          <Rule sx={{ margin: "1rem 0" }} />
+          <ReadingItem
+            label="The Psalms"
+            reference={morning_scripture[0].full.citation}
+          ></ReadingItem>
+          <ReadingItem
+            label="Reading 1"
+            reference={morning_scripture[1].full.citation}
+          ></ReadingItem>
+          <ReadingItem
+            label="Reading 2"
+            reference={morning_scripture[2].full.citation}
+          ></ReadingItem>
+        </Box>
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            maxWidth: "300px",
+            padding: theme.space[8],
+          }}
+        >
+          <Heading as="h3" level={3}>
+            Evening Prayer
+          </Heading>
+          <Rule sx={{ margin: "1rem 0" }} />
+          <ReadingItem
+            label="The Psalms"
+            reference={evening_scripture[0].full.citation}
+          ></ReadingItem>
+          <ReadingItem
+            label="Reading 1"
+            reference={evening_scripture[1].full.citation}
+          ></ReadingItem>
+          <ReadingItem
+            label="Reading 2"
+            reference={evening_scripture[2].full.citation}
+          ></ReadingItem>
+        </Box>
+      </Box>
+    </Box>
   );
 }
