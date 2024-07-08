@@ -1,7 +1,7 @@
 // import { redirect } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 
-export async function loader() {
+export default function loader() {
   const today = new Date().toISOString().split('T')[0];
   console.log('Redirecting to today:', today);
   // return redirect(`/daily-readings/${today}`);
@@ -17,6 +17,6 @@ export async function loader() {
   );
 }
 
-export default function Index() {
-  return null;
-}
+// export default function Index() {
+//   return null;
+// }

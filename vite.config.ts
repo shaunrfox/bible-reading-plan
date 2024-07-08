@@ -2,7 +2,7 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { remixDevTools } from "remix-development-tools";
-import react from '@vitejs/plugin-react';
+// import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
@@ -10,7 +10,7 @@ export default defineConfig({
     remixDevTools(),
     remix(),
     tsconfigPaths(),
-    react(),
+    // react(),
   ],
   resolve: {
     alias: {
