@@ -11,18 +11,24 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.3.0",
+    "@emotion/styled-base": "^11.0.0",
     "@remix-run/node": "^2.10.0",
     "@remix-run/react": "^2.10.2",
     "@remix-run/serve": "^2.10.0",
     "@vitejs/plugin-react": "^1.0.0",
     "isbot": "^4.1.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "styled-components": "^6.0.7",
+    "theme-ui": "^0.16.1"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.10.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "@types/styled-system__css": "^5.0.16",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "eslint": "^8.38.0",

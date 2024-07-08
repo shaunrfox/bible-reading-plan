@@ -1,10 +1,10 @@
 import { json, useLoaderData, Params } from "@remix-run/react";
 import { LoaderFunction } from "@remix-run/node";
 import { fetchDailyReadings } from "~/utils/api";
-import { fetchScripture } from "~/utils/nltApi";
-import { formatReference } from "~/utils/formatReference";
-import AppHeader from "~/components/AppHeader";
-import DateNav from "~/components/DateNav";
+// import { fetchScripture } from "~/utils/nltApi";
+// import { formatReference } from "~/utils/formatReference";
+import AppHeader from "~/components/AppHeader/index";
+import DateNav from "~/components/DateNav/index";
 
 export const loader: LoaderFunction = async ({
   params,
@@ -23,11 +23,8 @@ export const loader: LoaderFunction = async ({
       date = new Date(new Date().toISOString().split("T")[0]);
     }
 
-    // format date like YYYY-MM-DD
     date = date.toISOString().split("T")[0];
-    // console.log(date);
 
-    // console.log(`Loading daily readings for date: ${date}`);
     const fetchedData = await fetchDailyReadings(date);
 
     return json({

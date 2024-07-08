@@ -2,7 +2,7 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { fetchDailyReadings } from "~/utils/api";
-import AppHeader from "~/components/AppHeader";
+import AppHeader from "~/components/AppHeader/index";
 
 export const loader = async () => {
   const today = new Date().toISOString().split("T")[0];
