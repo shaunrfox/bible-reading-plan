@@ -20,6 +20,6 @@ export default (mode: modes): SystemStyleObject => ({
     color: mode === modes.dark ? 'gray.5' : 'gray.80',
   },
   body: {
-    bg: mode === modes.dark ? 'gray.80' : 'gray.0',
+    bg: mode === modes.dark ? 'gray.100' : 'gray.0',
   },
 });

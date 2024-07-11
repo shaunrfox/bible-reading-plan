@@ -10,7 +10,7 @@ const Rule = styled.div<RuleProps>(
     height: "1px",
     width: "100%",
     backgroundColor: ({ mode }: Theme) =>
-      mode === modes.dark ? "gray.40" : "gray.20",
+      mode === modes.dark ? "gray.60" : "gray.20",
   }),
   sxPropHelper
 );

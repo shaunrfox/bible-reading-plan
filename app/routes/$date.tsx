@@ -1,19 +1,14 @@
 import { json, useLoaderData, Params } from "@remix-run/react";
 import { LoaderFunction } from "@remix-run/node";
 import { fetchDailyReadings } from "~/utils/api";
-// import { fetchScripture } from "~/utils/nltApi";
-// import { formatReference } from "~/utils/formatReference";
+import theme, { modes } from "~/utils/theme";
+import { useTheme } from "@emotion/react";
 import AppHeader from "~/components/AppHeader/index";
 import Box from "~/components/Box";
 import DateNav from "~/components/DateNav/index";
 import Heading from "~/components/Heading";
 import Text from "~/components/Text";
-import theme from "~/utils/theme";
 import Rule from "~/components/Rule";
-
-// const NavItem = styled("li")`
-//   display: block;
-// `;
 
 export function ReadingItem({
   label,
@@ -22,6 +17,8 @@ export function ReadingItem({
   label: string;
   reference: string;
 }) {
+  const { mode } = useTheme();
+
   return (
     <Box
       sx={{
@@ -36,7 +33,7 @@ export function ReadingItem({
           textTransform: "uppercase",
           fontWeight: theme.fontWeights.bold,
           letterSpacing: theme.space[1],
-          color: theme.colors.mint[40],
+          color: mode === modes.dark ? "mint.50" : "mint.40",
         }}
       >
         {label}

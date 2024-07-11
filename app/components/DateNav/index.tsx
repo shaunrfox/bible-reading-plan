@@ -1,6 +1,6 @@
 import React from "react";
 import theme, { modes } from "~/utils/theme";
-import { themeHelper, sxPropHelper, StyleProps } from "~/utils/styled";
+import { useTheme } from "@emotion/react";
 import { Link, useLocation } from "@remix-run/react";
 import ArrowLeft from "../icons/ArrowLeft";
 import ArrowRight from "../icons/ArrowRight";
@@ -14,7 +14,7 @@ type DateNavProps = {
   date: Date;
 };
 
-const DateNav: React.FC<DateNavProps> = ({ date, ...props }) => {
+const DateNav: React.FC<DateNavProps> = ({ date }) => {
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       weekday: "short", // Mon
@@ -72,6 +72,8 @@ const DateNav: React.FC<DateNavProps> = ({ date, ...props }) => {
     return currentDate === today;
   };
 
+  const { mode } = useTheme();
+
   return (
     <Box
       as="nav"
@@ -83,8 +85,7 @@ const DateNav: React.FC<DateNavProps> = ({ date, ...props }) => {
         justifyContent: "center",
         gap: theme.space[6],
         p: theme.space[6],
-        bg: theme.colors.gray[5],
-        // bg: mode === modes.dark ? "gray.5" : "gray.80",
+        bg: mode === modes.dark ? "gray.90" : "gray.5",
         borderRadius: theme.radii[4],
         marginBottom: theme.space[10],
       }}
@@ -113,7 +114,7 @@ const DateNav: React.FC<DateNavProps> = ({ date, ...props }) => {
       {!isToday() && (
         <MyLink
           to={`/${formatTodayDate()}`}
-          style={{
+          sx={{
             position: "absolute",
             bottom: "-30px",
             display: "flex",

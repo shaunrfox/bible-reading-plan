@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Links,
   Meta,
@@ -19,8 +19,29 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
+function getPreferredTheme() {
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    return modes.dark;
+  }
+  return modes.light;
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
-  const [mode] = useState(modes.light);
+  const [mode, setMode] = useState(modes.light);
+
+  useEffect(() => {
+    setMode(getPreferredTheme());
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = () =>
+      setMode(mediaQuery.matches ? modes.dark : modes.light);
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   return (
     <ThemeProvider theme={{ ...theme, mode }}>

@@ -1,15 +1,4 @@
 import { type Theme as StyledSystemTheme } from '@styled-system/css';
-// import { createMediaQueries } from './mediaQueries';
-
-// const breakpoints = {
-//   sm: 640,
-//   md: 768,
-//   lg: 1024,
-//   xl: 1280,
-//   '2xl': 1536,
-// };
-
-// const breakpoints = ["640", "768", "1024", "1280", "1536"];
 
 const makeTheme = <T extends StyledSystemTheme>(t: T) => t;
 const theme = makeTheme({
@@ -117,14 +106,6 @@ const theme = makeTheme({
     5: '1rem',
     full: '100%',
   },
-  // mediaQueries: createMediaQueries(breakpoints),
-  // breakpoints: {
-  //   sm: 640,
-  //   md: 768,
-  //   lg: 1024,
-  //   xl: 1280,
-  //   '2xl': 1536,
-  // },
   breakpoints: ["640px", "768px", "1024px", "1280px", "1536px"],
   styles: {
     root: {
