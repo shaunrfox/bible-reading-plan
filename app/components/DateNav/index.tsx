@@ -1,10 +1,11 @@
 import React from "react";
+import theme, { modes } from "~/utils/theme";
+import { themeHelper, sxPropHelper, StyleProps } from "~/utils/styled";
 import { Link, useLocation } from "@remix-run/react";
 import ArrowLeft from "../icons/ArrowLeft";
 import ArrowRight from "../icons/ArrowRight";
 import Box from "../Box";
 import Heading from "../Heading";
-import theme, { modes } from "~/utils/theme";
 import Reset from "../icons/Reset";
 import { IconButton } from "../Button";
 import MyLink from "../MyLink";
@@ -13,7 +14,7 @@ type DateNavProps = {
   date: Date;
 };
 
-const DateNav: React.FC<DateNavProps> = ({ date }) => {
+const DateNav: React.FC<DateNavProps> = ({ date, ...props }) => {
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       weekday: "short", // Mon
@@ -82,8 +83,8 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
         justifyContent: "center",
         gap: theme.space[6],
         p: theme.space[6],
-        // bg: theme.colors.gray[5],
-        bg: mode === modes.dark ? "gray.5" : "gray.80",
+        bg: theme.colors.gray[5],
+        // bg: mode === modes.dark ? "gray.5" : "gray.80",
         borderRadius: theme.radii[4],
         marginBottom: theme.space[10],
       }}

@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-
-import { themeHelper, sxPropHelper, StyleProps } from "../../utils/styled";
-import { modes } from "../../utils/theme";
+import { themeHelper, sxPropHelper, StyleProps } from "~/utils/styled";
+import { modes } from "~/utils/theme";
 
 interface TextProps extends StyleProps {
   level?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
