@@ -32,7 +32,7 @@ export const loader: LoaderFunction = async () => {
   return json({ events: allEvents });
 };
 
-export default function CalendarIndexRoute({
+export default function Calendar({
   data,
 }: {
   data: {

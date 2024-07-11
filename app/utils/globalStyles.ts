@@ -22,15 +22,4 @@ export default (mode: modes): SystemStyleObject => ({
   body: {
     bg: mode === modes.dark ? 'gray.80' : 'gray.0',
   },
-  a: {
-    color: mode === modes.dark ? 'gray.5' : 'gray.80',
-    borderBottomStyle: "solid",
-    borderBottomWidth: "1px",
-    borderColor: "transparent",
-    textDecoration: 'none',
-    '&:hover': {
-      color: mode === modes.dark ? 'blue.20' : 'blue.60',
-      borderColor: mode === modes.dark ? 'blue.20' : 'blue.60',
-    },
-  }
 });

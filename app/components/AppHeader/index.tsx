@@ -3,6 +3,7 @@ import Box from "../Box";
 import Heading from "~/components/Heading";
 import Text from "~/components/Text";
 import theme from "~/utils/theme";
+import MyLink from "../MyLink";
 
 interface AppHeaderProps {
   season?: string;
@@ -18,28 +19,33 @@ export default function AppHeader({ season }: AppHeaderProps) {
         alignItems: "center",
         width: "100%",
         padding: "1rem 1.5rem",
-        // borderBottom: "1px solid",
-        // borderBottomColor: theme.colors.gray[20],
+        "@container wrapper (width < 500px)": {
+          flexDirection: "column",
+        },
       }}
     >
-      <Link to={`/`}>
+      <MyLink to={`/`}>
         <Heading
           as={"h1"}
-          level={4}
+          level={[5, 5, 4, 4, 4]}
           sx={{
             m: 0,
             color: "currentcolor",
+            "@container wrapper (width < 640px)": {
+              textAlign: "center",
+            },
           }}
         >
           Daily Readings
         </Heading>
-      </Link>
+      </MyLink>
       <Text
         level={3}
-        // sx={{
-        //   textTransform: "uppercase",
-        //   letterSpacing: "1px",
-        // }}
+        sx={{
+          "@container wrapper (width < 640px)": {
+            textAlign: "center",
+          },
+        }}
       >
         {season}
       </Text>

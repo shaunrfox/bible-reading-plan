@@ -4,7 +4,7 @@ import { themeHelper, sxPropHelper, StyleProps } from "../../utils/styled";
 import { modes } from "../../utils/theme";
 
 interface HeadingProps extends StyleProps {
-  level?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  level?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | [];
   font?: "default" | "mono";
 }
 

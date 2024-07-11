@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { themeHelper, sxPropHelper, type StyleProps } from "../../utils/styled";
-import { modes } from "../../utils/theme";
+import { themeHelper, sxPropHelper, type StyleProps } from "~/utils/styled";
+import { modes } from "~/utils/theme";
 
 interface ButtonProps extends StyleProps {
   variant?: keyof typeof variants;
+  to?: string;
 }
 
 const variants = {
@@ -218,6 +219,8 @@ const variants = {
 };
 
 const baseStyles = themeHelper({
+  display: "flex",
+  justifyContent: "center",
   fontWeight: "normal",
   fontFamily: "default",
   fontSize: 3,

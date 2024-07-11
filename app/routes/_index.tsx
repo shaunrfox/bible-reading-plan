@@ -1,26 +1,70 @@
-// import { redirect } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
-import { fetchDailyReadings } from "~/utils/api";
+import { useLoaderData, json, Params } from "@remix-run/react";
+import { LoaderFunction } from "@remix-run/node";
+import { fetchMonthReadings } from "~/utils/api";
 import AppHeader from "~/components/AppHeader/index";
+import Box from "~/components/Box";
+// import Calendar from "~/components/Calendar";
+import Datepicker from "~/components/Datepicker";
+import MyLink from "~/components/MyLink";
 
-export const loader = async () => {
-  const today = new Date().toISOString().split("T")[0];
-  const fetchedData = await fetchDailyReadings(today);
+// function to loop through data and get the dates
+function getDates(data) {
+  const dates = [];
+  for (const day in data) {
+    const date = data[day].date;
+    dates.push(date);
+  }
+  return dates;
+}
 
-  return json({
-    date: today,
-    season: fetchedData.calendarDate.season.name,
-  });
+export const loader: LoaderFunction = async ({
+  params,
+}: {
+  params: Params;
+}) => {
+  try {
+    const dateString = params.date;
+    let date;
+    if (dateString) {
+      date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        throw new Response("Invalid date", { status: 400 });
+      }
+    } else {
+      date = new Date(new Date().toISOString().split("T")[0]);
+    }
+
+    date = date.toISOString().split("T")[0];
+
+    // format date to yyyy-MM
+    const year_month = date.slice(0, 7);
+
+    const fetchedData = await fetchMonthReadings(year_month);
+
+    return json({
+      fetchedData,
+      date: date,
+    });
+  } catch (error) {
+    console.error("Error in loader:", error);
+    return json(
+      { error: "Error loading daily readings and scripture content" },
+      { status: 500 }
+    );
+  }
 };
 
 export default function Index() {
   const today = new Date().toISOString().split("T")[0];
   const data = useLoaderData();
 
+  // const dates = getDates(data.fetchedData);
+
+  // console.log(JSON.stringify(data, null, 2));
+
   return (
-    <div>
-      <AppHeader date={data.date} season={data.season} />
+    <Box>
+      <AppHeader season={data.season} />
       <section
         style={{
           display: "flex",
@@ -28,13 +72,15 @@ export default function Index() {
           padding: "1.5rem",
         }}
       >
-        <ul>
-          <li>
-            <Link to={`/${today}`}>Today</Link>
-          </li>
-        </ul>
+        <Box sx={{ p: 5 }}>
+          <MyLink to={`/${today}`}>Today</MyLink>
+        </Box>
+        {/* <Calendar data={dates} /> */}
+        <Datepicker />
+        {/* <Text>{dates}</Text> */}
+        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
       </section>
-    </div>
+    </Box>
   );
 }
 

@@ -1,10 +1,13 @@
 import React from "react";
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import ArrowLeft from "../icons/ArrowLeft";
 import ArrowRight from "../icons/ArrowRight";
 import Box from "../Box";
 import Heading from "../Heading";
-import theme from "~/utils/theme";
+import theme, { modes } from "~/utils/theme";
+import Reset from "../icons/Reset";
+import { IconButton } from "../Button";
+import MyLink from "../MyLink";
 
 type DateNavProps = {
   date: Date;
@@ -55,31 +58,43 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
     return date.toISOString().split("T")[0];
   };
 
+  const formatTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  };
+
+  const location = useLocation();
+
+  const isToday = () => {
+    const today = formatTodayDate();
+    const currentDate = location.pathname.slice(1); // Remove the leading '/'
+    return currentDate === today;
+  };
+
   return (
     <Box
       as="nav"
       className="date-nav"
       sx={{
+        position: "relative",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         gap: theme.space[6],
         p: theme.space[6],
-        bg: theme.colors.gray[5],
+        // bg: theme.colors.gray[5],
+        bg: mode === modes.dark ? "gray.5" : "gray.80",
         borderRadius: theme.radii[4],
         marginBottom: theme.space[10],
       }}
     >
-      <Link
+      <IconButton
+        as={Link}
+        variant="hollow"
         to={`/${formatUrlDate(previousDay)}`}
-        style={{
-          borderStyle: "solid",
-          borderWidth: "1px",
-          borderRadius: theme.radii[3],
-        }}
       >
         <ArrowLeft sx={{ fill: "currentcolor" }} />
-      </Link>
+      </IconButton>
       <Heading
         as={"h2"}
         level={4}
@@ -91,16 +106,24 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
       >
         {formatDate(date)}
       </Heading>
-      <Link
-        to={`/${formatUrlDate(nextDay)}`}
-        style={{
-          borderStyle: "solid",
-          borderWidth: "1px",
-          borderRadius: theme.radii[3],
-        }}
-      >
+      <IconButton as={Link} variant="hollow" to={`/${formatUrlDate(nextDay)}`}>
         <ArrowRight sx={{ fill: "currentcolor" }} />
-      </Link>
+      </IconButton>
+      {!isToday() && (
+        <MyLink
+          to={`/${formatTodayDate()}`}
+          style={{
+            position: "absolute",
+            bottom: "-30px",
+            display: "flex",
+            alignItems: "center",
+            gap: theme.space[3],
+          }}
+        >
+          <Reset sx={{ fill: "currentcolor" }} />
+          Today
+        </MyLink>
+      )}
     </Box>
   );
 };

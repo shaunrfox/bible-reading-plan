@@ -102,6 +102,8 @@ export default function DatePage() {
         flexDirection: "column",
         alignItems: "center",
         width: "100%",
+        containerName: "wrapper",
+        containerType: "size",
       }}
     >
       <AppHeader season={data.fetchedData.calendarDate.season.name} />
