@@ -6,6 +6,14 @@
 
 const API_BASE_URL = 'https://api.dailyoffice2019.com/api/v1/';
 
+import { Low } from 'lowdb';
+import { JSONFile } from 'lowdb/node';
+
+// Configure LowDB with a separate test database
+const adapter = new JSONFile('test-readings.json');
+const defaultData = { readings: [] };
+const db = new Low(adapter, defaultData);
+
 export async function fetchDailyReadings(date) {
 	try {
 		const response = await fetch(`${API_BASE_URL}readings/${date}`);
@@ -20,7 +28,22 @@ export async function fetchDailyReadings(date) {
 		}
 
 		const data = await response.json();
-		console.log('Data fetched:', data);
+
+		// Load existing data
+		await db.read();
+
+		// Add or update reading data
+		const existingIndex = db.data.readings.findIndex(r => r.date === date);
+		if (existingIndex >= 0) {
+			db.data.readings[existingIndex] = { date, data };
+		} else {
+			db.data.readings.push({ date, data });
+		}
+
+		// Write to file
+		await db.write();
+		console.log(`Data written to test-readings.json for date: ${date}`);
+
 		return data;
 	} catch (error) {
 		console.error('Error in fetchDailyReadings:', error);

@@ -1,0 +1,9 @@
+# ----
+# Automatically Generated .dropboxignore file at Thu Oct 17 17:56:07 CDT 2024
+# ----
+node_modules
+
+/.cache
+/build
+.env
+# ----
