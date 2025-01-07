@@ -1,6 +1,3 @@
-// prefetch.js
-
-import fetch from 'node-fetch';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 
@@ -12,14 +9,15 @@ const adapter = new JSONFile('db.json');
 const defaultData = { readings: [] }; // Provide default data
 const db = new Low(adapter, defaultData);
 
-async function fetchAllData() {
+async function fetchAllData(startDate, endDate) {
 	// Load existing data from the JSON file
 	await db.read();
 
-	// No need to initialize db.data here since it's already set
+	// Ensure db.data.readings is an array
+	db.data.readings = db.data.readings || [];
 
 	// Generate the range of dates you need
-	const dates = generateDateRange('2024-11-10', '2024-11-15');
+	const dates = generateDateRange(startDate, endDate);
 
 	// Fetch data for all dates
 	const dataPromises = dates.map(async (date) => {
@@ -37,13 +35,24 @@ async function fetchAllData() {
 		}
 	});
 
-	const allData = await Promise.all(dataPromises);
+	const validData = (await Promise.all(dataPromises)).filter((entry) => entry !== null);
 
-	// Filter out any null results due to fetch errors
-	const validData = allData.filter((entry) => entry !== null);
+	// Create a Map from existing readings for quick lookup
+	const readingsMap = new Map(db.data.readings.map((entry) => [entry.date, entry.data]));
 
-	// Store the fetched data in the database
-	db.data.readings = validData;
+	// Overwrite or add new readings
+	for (const entry of validData) {
+		readingsMap.set(entry.date, entry.data); // Overwrites existing data for the date
+	}
+
+	// Create an array from the map entries and sort it by date
+	const mergedReadings = Array.from(readingsMap.entries())
+		.map(([date, data]) => ({ date, data }))
+		.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+	// Store the merged and sorted data back into db.data.readings
+	db.data.readings = mergedReadings;
+
 	await db.write();
 
 	console.log('Data fetching and storing completed successfully.');
@@ -53,8 +62,10 @@ async function fetchAllData() {
 function generateDateRange(startDate, endDate) {
 	const dates = [];
 	let currentDate = new Date(startDate);
+	const endDateTime = new Date(endDate);
+	endDateTime.setDate(endDateTime.getDate() + 1); // Add one day to make it inclusive
 
-	while (currentDate <= new Date(endDate)) {
+	while (currentDate < endDateTime) {  // Changed <= to < since we added a day to endDateTime
 		const dateString = currentDate.toISOString().split('T')[0]; // 'YYYY-MM-DD'
 		dates.push(dateString);
 		currentDate.setDate(currentDate.getDate() + 1);
@@ -64,4 +75,14 @@ function generateDateRange(startDate, endDate) {
 }
 
 // Execute the function
-fetchAllData().catch((error) => console.error('Error in fetchAllData:', error));
+// Get command-line arguments
+const args = process.argv.slice(2);
+const startDate = args[0]; // e.g., '2024-07-01'
+const endDate = args[1]; // e.g., '2024-07-31'
+
+if (!startDate || !endDate) {
+	console.error('Please provide start date and end date in YYYY-MM-DD format as command-line arguments.');
+	process.exit(1);
+}
+
+fetchAllData(startDate, endDate).catch((error) => console.error('Error in fetchAllData:', error));

@@ -1,6 +1,6 @@
 import { json, useLoaderData, Params } from "@remix-run/react";
 import { LoaderFunction } from "@remix-run/node";
-import { fetchDailyReadings } from "~/utils/api";
+import { getDailyReading } from "~/utils/api_local";
 import theme, { modes } from "~/utils/theme";
 import { useTheme } from "@emotion/react";
 import AppHeader from "~/components/AppHeader/index";
@@ -9,6 +9,57 @@ import DateNav from "~/components/DateNav/index";
 import Heading from "~/components/Heading";
 import Text from "~/components/Text";
 import Rule from "~/components/Rule";
+import Warning from "~/components/icons/Warning";
+import { localizedDate } from "~/utils/dateHelpers";
+
+const errorAlertStyles = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  width: "100%",
+  maxWidth: "350px",
+  padding: theme.space[6],
+  backgroundColor: theme.colors.red[5],
+  color: theme.colors.red[50],
+  borderRadius: theme.radii[4],
+  border: `2px solid ${theme.colors.red[10]}`,
+  boxShadow: `0 2px 7px 0px ${theme.colors.shadowColor}`,
+
+  header: {
+    display: "flex",
+    alignItems: "center",
+    fontWeight: theme.fontWeights.bold,
+    textTransform: "uppercase",
+    fontSize: theme.fontSizes[2.5],
+    letterSpacing: theme.space[1],
+  },
+
+  svg: {
+    marginRight: theme.space[3],
+    fill: theme.colors.red[50],
+  },
+
+  span: {},
+};
+
+const ErrorAlert = ({ error }: { error: string }) => {
+  return (
+    <Box sx={errorAlertStyles}>
+      <header>
+        <Warning /> Error loading data
+      </header>
+      <Rule
+        sx={{
+          margin: "1rem 0",
+          backgroundColor: theme.colors.red[10],
+          height: "2px",
+        }}
+      />
+      <span>{error}</span>
+    </Box>
+  );
+};
 
 export function ReadingItem({
   label,
@@ -52,17 +103,16 @@ export const loader: LoaderFunction = async ({
     const dateString = params.date;
     let date;
     if (dateString) {
-      date = new Date(dateString);
-      if (isNaN(date.getTime())) {
-        throw new Response("Invalid date", { status: 400 });
+      // Validate the date format (YYYY-MM-DD)
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+        throw new Response("Invalid date format", { status: 400 });
       }
+      date = dateString;
     } else {
-      date = new Date(new Date().toISOString().split("T")[0]);
+      date = getTodayUTC();
     }
 
-    date = date.toISOString().split("T")[0];
-
-    const fetchedData = await fetchDailyReadings(date);
+    const fetchedData = await getDailyReading(date);
 
     return json({
       fetchedData,
@@ -78,11 +128,40 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function DatePage() {
-  const { date } = useLoaderData<{ date: string }>();
+  const data = useLoaderData<{
+    date: string;
+    fetchedData?: any;
+    error?: string;
+  }>();
 
-  const data = useLoaderData();
+  // Ensure we have a valid date, fallback to today if invalid
+  const safeDate = () => {
+    try {
+      if (!data.date) return new Date();
+      const date = new Date(data.date);
+      return isNaN(date.getTime()) ? new Date() : date;
+    } catch {
+      return new Date();
+    }
+  };
+
   if (data.error) {
-    return <div>Error loading data: {data.error}</div>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <AppHeader />
+        <DateNav date={safeDate()} />
+        <Box sx={{ marginTop: theme.space[8] }}>
+          <ErrorAlert error={data.error} />
+        </Box>
+      </Box>
+    );
   }
 
   const morning_scripture =
@@ -90,7 +169,7 @@ export default function DatePage() {
   const evening_scripture =
     data.fetchedData.services["Evening Prayer"].readings;
 
-  console.log(new Date(date));
+  console.log(new Date(data.date));
 
   return (
     <Box
@@ -104,7 +183,8 @@ export default function DatePage() {
       }}
     >
       <AppHeader season={data.fetchedData.calendarDate.season.name} />
-      <DateNav date={new Date(date)} />
+      <DateNav date={localizedDate(safeDate().toISOString(), "short")} />
+
       <Box
         as="section"
         sx={{

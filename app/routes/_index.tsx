@@ -6,6 +6,7 @@ import Box from "~/components/Box";
 // import Calendar from "~/components/Calendar";
 import Datepicker from "~/components/Datepicker";
 import MyLink from "~/components/MyLink";
+import { localizedDate } from "~/utils/dateHelpers";
 
 // function to loop through data and get the dates
 function getDates(data) {
@@ -55,7 +56,7 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function Index() {
-  const today = new Date().toISOString().split("T")[0];
+  const today = localizedDate(new Date().toISOString(), "short");
   const data = useLoaderData();
 
   // const dates = getDates(data.fetchedData);

@@ -40,13 +40,13 @@ function classNames(...classes: any[]) {
 
 export default function Datepicker() {
   const today = startOfToday();
-  // const [selectedDay, setSelectedDay] = useState(today);
-
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-  // const setSelectedDayToToday = () => {
-  //   setCurrentMonth(format(today, "MMM-yyyy"));
-  //   setSelectedDay(today);
-  // };
+
+  // When creating links, ensure we format in UTC
+  const formatDateForUrl = (date: Date) => {
+    return format(date, "yyyy-MM-dd");
+  };
+
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   const days = eachDayOfInterval({
@@ -193,7 +193,7 @@ export default function Datepicker() {
           >
             <Button
               as={Link}
-              to={"/" + format(day, "yyyy-MM-dd")}
+              to={"/" + formatDateForUrl(day)}
               variant={isToday(day) ? "accent" : "hollow"}
               sx={{
                 width: "1.75rem",
@@ -202,9 +202,7 @@ export default function Datepicker() {
                 py: 2,
               }}
             >
-              <time dateTime={format(day, "yyyy-MM-dd")}>
-                {format(day, "d")}
-              </time>
+              <time dateTime={formatDateForUrl(day)}>{format(day, "d")}</time>
             </Button>
           </Box>
         ))}

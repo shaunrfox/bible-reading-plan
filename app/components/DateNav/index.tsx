@@ -9,65 +9,37 @@ import Heading from "../Heading";
 import Reset from "../icons/Reset";
 import { IconButton } from "../Button";
 import MyLink from "../MyLink";
+import {
+  formatDateToISOString,
+  formatDateForDisplay,
+} from "~/utils/dateHelpers";
 
 type DateNavProps = {
-  date: Date;
+  date: string; // ISO date string
 };
 
 const DateNav: React.FC<DateNavProps> = ({ date }) => {
-  const formatDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "short", // Mon
-      month: "short", // Jul
-      day: "2-digit", // 08
-      year: "numeric", // 2024
-      timeZone: "UTC",
-    };
+  const displayDate = formatDateForDisplay(date);
 
-    const dateParts = new Intl.DateTimeFormat("en-US", options).formatToParts(
-      date
-    );
-
-    const formattedDate =
-      `${dateParts.find((part) => part.type === "weekday")?.value} | ` +
-      `${dateParts.find((part) => part.type === "month")?.value} ` +
-      `${dateParts.find((part) => part.type === "day")?.value}, ` +
-      `${dateParts.find((part) => part.type === "year")?.value}`;
-
-    return formattedDate;
+  const getPreviousDay = (isoDate: string) => {
+    const date = new Date(isoDate);
+    date.setDate(date.getDate() - 1);
+    return formatDateToISOString(date);
   };
 
-  const getPreviousDay = (date: Date) => {
-    const prevDate = new Date(date);
-    prevDate.setUTCDate(date.getUTCDate() - 1);
-    return prevDate;
-  };
-
-  const getNextDay = (date: Date) => {
-    const nextDate = new Date(date);
-    nextDate.setUTCDate(date.getUTCDate() + 1);
-    return nextDate;
+  const getNextDay = (isoDate: string) => {
+    const date = new Date(isoDate);
+    date.setDate(date.getDate() + 1);
+    return formatDateToISOString(date);
   };
 
   const previousDay = getPreviousDay(date);
   const nextDay = getNextDay(date);
 
-  const formatUrlDate = (date: Date | string) => {
-    if (typeof date === "string") {
-      return date;
-    }
-    return date.toISOString().split("T")[0];
-  };
-
-  const formatTodayDate = () => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  };
-
   const location = useLocation();
 
   const isToday = () => {
-    const today = formatTodayDate();
+    const today = formatDateToISOString(new Date());
     const currentDate = location.pathname.slice(1); // Remove the leading '/'
     return currentDate === today;
   };
@@ -90,11 +62,7 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
         marginBottom: theme.space[10],
       }}
     >
-      <IconButton
-        as={Link}
-        variant="hollow"
-        to={`/${formatUrlDate(previousDay)}`}
-      >
+      <IconButton as={Link} variant="hollow" to={`/${previousDay}`}>
         <ArrowLeft sx={{ fill: "currentcolor" }} />
       </IconButton>
       <Heading
@@ -106,14 +74,14 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
           letterSpacing: "1px",
         }}
       >
-        {formatDate(date)}
+        {displayDate}
       </Heading>
-      <IconButton as={Link} variant="hollow" to={`/${formatUrlDate(nextDay)}`}>
+      <IconButton as={Link} variant="hollow" to={`/${nextDay}`}>
         <ArrowRight sx={{ fill: "currentcolor" }} />
       </IconButton>
       {!isToday() && (
         <MyLink
-          to={`/${formatTodayDate()}`}
+          to={`/${formatDateToISOString(new Date())}`}
           sx={{
             position: "absolute",
             bottom: "-30px",

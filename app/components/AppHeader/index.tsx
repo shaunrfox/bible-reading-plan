@@ -4,12 +4,15 @@ import Heading from "~/components/Heading";
 import Text from "~/components/Text";
 import theme from "~/utils/theme";
 import MyLink from "../MyLink";
+import { localizedDate, getTodayUTC } from "~/utils/dateHelpers";
 
 interface AppHeaderProps {
   season?: string;
 }
 
 export default function AppHeader({ season }: AppHeaderProps) {
+  const today = getTodayUTC();
+
   return (
     <Box
       as="header"
@@ -24,21 +27,28 @@ export default function AppHeader({ season }: AppHeaderProps) {
         },
       }}
     >
-      <MyLink to={`/`}>
-        <Heading
-          as={"h1"}
-          level={[5, 5, 4, 4, 4]}
-          sx={{
-            m: 0,
-            color: "currentcolor",
-            "@container wrapper (width < 640px)": {
-              textAlign: "center",
-            },
-          }}
-        >
-          Daily Readings
-        </Heading>
-      </MyLink>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <MyLink to={`/`}>
+          <Heading
+            as={"h1"}
+            level={[5, 5, 4, 4, 4]}
+            sx={{
+              display: "inline-block",
+              width: "fit-content",
+              m: 0,
+              color: "currentcolor",
+              "@container wrapper (width < 640px)": {
+                textAlign: "center",
+              },
+            }}
+          >
+            Daily Readings
+          </Heading>
+        </MyLink>
+        <Text level={2.5} sx={{ color: "gray.30" }}>
+          {localizedDate(today, "long")}
+        </Text>
+      </Box>
       <Text
         level={3}
         sx={{
