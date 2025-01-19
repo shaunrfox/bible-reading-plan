@@ -99,7 +99,7 @@ export function createDate(input?: string | Date | null): Date {
     const utcDate = new Date(
       Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0)
     );
-    console.log("createDate (no input):", { input, result: utcDate });
+    // console.log("createDate (no input):", { input, result: utcDate });
     return utcDate;
   }
 
@@ -107,20 +107,20 @@ export function createDate(input?: string | Date | null): Date {
     const utcDate = new Date(
       Date.UTC(input.getFullYear(), input.getMonth(), input.getDate(), 12, 0, 0)
     );
-    console.log("createDate (Date input):", { input, result: utcDate });
+    // console.log("createDate (Date input):", { input, result: utcDate });
     return utcDate;
   }
 
   // For string input, parse the components directly to avoid timezone issues
   const [year, month, day] = input.split("-").map((num) => parseInt(num, 10));
   const utcDate = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
-  console.log("createDate (string input):", {
-    input,
-    year,
-    month,
-    day,
-    result: utcDate,
-  });
+  // console.log("createDate (string input):", {
+  //   input,
+  //   year,
+  //   month,
+  //   day,
+  //   result: utcDate,
+  // });
   return utcDate;
 }
 

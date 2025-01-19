@@ -49,12 +49,12 @@ export function DateNav() {
     displayDate = format_(currentDate, "short");
     previousDate = format_(getPreviousDate(currentDate), "path");
     nextDate = format_(getNextDate(currentDate), "path");
-    console.log("DateNav render:", {
-      currentDate,
-      displayDate,
-      previousDate,
-      nextDate,
-    });
+    // console.log("DateNav render:", {
+    //   currentDate,
+    //   displayDate,
+    //   previousDate,
+    //   nextDate,
+    // });
   }
 
   const { mode } = useTheme();

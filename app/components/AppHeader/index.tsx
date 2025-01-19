@@ -43,18 +43,21 @@ export default function AppHeader({ season }: AppHeaderProps) {
             Daily Readings
           </Heading>
         </MyLink>
-        <Text sx={{ color: "gray.30" }}>{format_(getToday(), "short")}</Text>
       </Box>
-      <Text
-        level={3}
+      <Box
         sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          alignItems: "flex-end",
           "@container wrapper (width < 640px)": {
-            textAlign: "center",
+            alignItems: "center",
           },
         }}
       >
-        {season}
-      </Text>
+        <Text>{format_(getToday(), "short")}</Text>
+        <Text level={2}>{season}</Text>
+      </Box>
     </Box>
   );
 }
