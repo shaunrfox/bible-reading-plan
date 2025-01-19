@@ -1,4 +1,5 @@
-import { json, useLoaderData, Params } from "@remix-run/react";
+import { useState, useEffect } from "react";
+import { json, useParams, useLocation } from "@remix-run/react";
 import { LoaderFunction } from "@remix-run/node";
 import { getDailyReading } from "~/utils/api_local";
 import theme, { modes } from "~/utils/theme";
@@ -10,7 +11,7 @@ import Heading from "~/components/Heading";
 import Text from "~/components/Text";
 import Rule from "~/components/Rule";
 import Warning from "~/components/icons/Warning";
-import { localizedDate } from "~/utils/dateHelpers";
+import { createDate, format_ } from "~/utils/dateHelpers";
 
 const errorAlertStyles = {
   display: "flex",
@@ -94,58 +95,36 @@ export function ReadingItem({
   );
 }
 
-export const loader: LoaderFunction = async ({
-  params,
-}: {
-  params: Params;
-}) => {
-  try {
-    const dateString = params.date;
-    let date;
-    if (dateString) {
-      // Validate the date format (YYYY-MM-DD)
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
-        throw new Response("Invalid date format", { status: 400 });
-      }
-      date = dateString;
-    } else {
-      date = getTodayUTC();
-    }
-
-    const fetchedData = await getDailyReading(date);
-
-    return json({
-      fetchedData,
-      date: date,
-    });
-  } catch (error) {
-    console.error("Error in loader:", error);
-    return json(
-      { error: "Error loading daily readings and scripture content" },
-      { status: 500 }
-    );
-  }
-};
-
 export default function DatePage() {
-  const data = useLoaderData<{
-    date: string;
-    fetchedData?: any;
-    error?: string;
-  }>();
+  const { date } = useParams<{ date: string }>();
+  const [currentDate, setCurrentDate] = useState<Date | null>(null);
+  const [fetchedData, setFetchedData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+  const location = useLocation();
 
-  // Ensure we have a valid date, fallback to today if invalid
-  const safeDate = () => {
+  useEffect(() => {
     try {
-      if (!data.date) return new Date();
-      const date = new Date(data.date);
-      return isNaN(date.getTime()) ? new Date() : date;
-    } catch {
-      return new Date();
-    }
-  };
+      const dateFromURL = createDate(date);
+      setCurrentDate(dateFromURL);
 
-  if (data.error) {
+      const fetchData = async () => {
+        try {
+          const formattedDate = format_(dateFromURL, "path");
+          const data = await getDailyReading(formattedDate);
+          setFetchedData(data);
+        } catch (err) {
+          console.error("Error fetching data:", err);
+          setError("Error loading daily readings and scripture content");
+        }
+      };
+
+      fetchData();
+    } catch (err) {
+      setError("Invalid date");
+    }
+  }, [date, location]);
+
+  if (error) {
     return (
       <Box
         sx={{
@@ -156,20 +135,33 @@ export default function DatePage() {
         }}
       >
         <AppHeader />
-        <DateNav date={safeDate()} />
+        <DateNav />
         <Box sx={{ marginTop: theme.space[8] }}>
-          <ErrorAlert error={data.error} />
+          <ErrorAlert error={error} />
         </Box>
       </Box>
     );
   }
 
-  const morning_scripture =
-    data.fetchedData.services["Morning Prayer"].readings;
-  const evening_scripture =
-    data.fetchedData.services["Evening Prayer"].readings;
+  if (!fetchedData) {
+    return <div>Loading...</div>;
+  }
 
-  console.log(new Date(data.date));
+  const morningServiceKey = Object.keys(fetchedData.services).find((key) =>
+    key.startsWith("Morning Prayer")
+  );
+  const eveningServiceKey = Object.keys(fetchedData.services).find((key) =>
+    key.startsWith("Evening Prayer")
+  );
+
+  const morning_scripture = morningServiceKey
+    ? fetchedData.services[morningServiceKey].readings
+    : [];
+  const evening_scripture = eveningServiceKey
+    ? fetchedData.services[eveningServiceKey].readings
+    : [];
+
+  console.log(currentDate?.toISOString().split("T")[0]);
 
   return (
     <Box
@@ -182,8 +174,8 @@ export default function DatePage() {
         containerType: "size",
       }}
     >
-      <AppHeader season={data.fetchedData.calendarDate.season.name} />
-      <DateNav date={localizedDate(safeDate().toISOString(), "short")} />
+      <AppHeader season={fetchedData.calendarDate.season.name} />
+      <DateNav />
 
       <Box
         as="section"

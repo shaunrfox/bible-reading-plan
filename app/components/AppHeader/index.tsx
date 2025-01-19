@@ -4,15 +4,13 @@ import Heading from "~/components/Heading";
 import Text from "~/components/Text";
 import theme from "~/utils/theme";
 import MyLink from "../MyLink";
-import { localizedDate, getTodayUTC } from "~/utils/dateHelpers";
+import { format_, getToday, today } from "~/utils/dateHelpers";
 
 interface AppHeaderProps {
   season?: string;
 }
 
 export default function AppHeader({ season }: AppHeaderProps) {
-  const today = getTodayUTC();
-
   return (
     <Box
       as="header"
@@ -45,20 +43,21 @@ export default function AppHeader({ season }: AppHeaderProps) {
             Daily Readings
           </Heading>
         </MyLink>
-        <Text level={2.5} sx={{ color: "gray.30" }}>
-          {localizedDate(today, "long")}
-        </Text>
       </Box>
-      <Text
-        level={3}
+      <Box
         sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          alignItems: "flex-end",
           "@container wrapper (width < 640px)": {
-            textAlign: "center",
+            alignItems: "center",
           },
         }}
       >
-        {season}
-      </Text>
+        <Text>{format_(getToday(), "short")}</Text>
+        <Text level={2}>{season}</Text>
+      </Box>
     </Box>
   );
 }
