@@ -6,7 +6,7 @@ import Box from "~/components/Box";
 // import Calendar from "~/components/Calendar";
 import Datepicker from "~/components/Datepicker";
 import MyLink from "~/components/MyLink";
-import { localizedDate } from "~/utils/dateHelpers";
+import { createDate, format_, getToday } from "~/utils/dateHelpers";
 
 // function to loop through data and get the dates
 function getDates(data) {
@@ -27,17 +27,15 @@ export const loader: LoaderFunction = async ({
     const dateString = params.date;
     let date;
     if (dateString) {
-      date = new Date(dateString);
+      date = createDate(dateString);
       if (isNaN(date.getTime())) {
         throw new Response("Invalid date", { status: 400 });
       }
     } else {
-      date = new Date(new Date().toISOString().split("T")[0]);
+      date = new Date(); // Use local time
     }
 
-    date = date.toISOString().split("T")[0];
-
-    // format date to yyyy-MM
+    date = format_(date, "path"); // Use our consistent formatter
     const year_month = date.slice(0, 7);
 
     const fetchedData = await fetchMonthReadings(year_month);
@@ -56,7 +54,7 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function Index() {
-  const today = localizedDate(new Date().toISOString(), "short");
+  const today = format_(getToday(), "short");
   const data = useLoaderData();
 
   // const dates = getDates(data.fetchedData);
@@ -65,7 +63,7 @@ export default function Index() {
 
   return (
     <Box>
-      <AppHeader season={data.season} />
+      {/* <AppHeader season={data.season} /> */}
       <section
         style={{
           display: "flex",

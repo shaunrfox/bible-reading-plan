@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import theme, { modes } from "~/utils/theme";
 import { useTheme } from "@emotion/react";
 import { Link, useLocation } from "@remix-run/react";
@@ -10,39 +10,52 @@ import Reset from "../icons/Reset";
 import { IconButton } from "../Button";
 import MyLink from "../MyLink";
 import {
-  formatDateToISOString,
-  formatDateForDisplay,
+  format_,
+  createDate,
+  areDatesEqual,
+  getToday,
+  parseURL,
+  getPreviousDate,
+  getNextDate,
 } from "~/utils/dateHelpers";
 
-type DateNavProps = {
-  date: string; // ISO date string
-};
+// type DateNavProps = {
+//   date: string; // ISO date string
+// };
 
-const DateNav: React.FC<DateNavProps> = ({ date }) => {
-  const displayDate = formatDateForDisplay(date);
-
-  const getPreviousDay = (isoDate: string) => {
-    const date = new Date(isoDate);
-    date.setDate(date.getDate() - 1);
-    return formatDateToISOString(date);
-  };
-
-  const getNextDay = (isoDate: string) => {
-    const date = new Date(isoDate);
-    date.setDate(date.getDate() + 1);
-    return formatDateToISOString(date);
-  };
-
-  const previousDay = getPreviousDay(date);
-  const nextDay = getNextDay(date);
-
+export function DateNav() {
+  const [currentDate, setCurrentDate] = useState<Date | null>(null);
   const location = useLocation();
+  const today = getToday();
 
-  const isToday = () => {
-    const today = formatDateToISOString(new Date());
-    const currentDate = location.pathname.slice(1); // Remove the leading '/'
-    return currentDate === today;
-  };
+  useEffect(() => {
+    const urlDate = parseURL();
+    console.log("DateNav effect:", { urlDate });
+
+    if (urlDate) {
+      const date = createDate(urlDate);
+      console.log("DateNav created date:", { urlDate, date });
+      setCurrentDate(date);
+    } else {
+      console.error("Date from URL is null");
+    }
+  }, [location]);
+
+  let displayDate;
+  let previousDate;
+  let nextDate;
+
+  if (currentDate) {
+    displayDate = format_(currentDate, "short");
+    previousDate = format_(getPreviousDate(currentDate), "path");
+    nextDate = format_(getNextDate(currentDate), "path");
+    console.log("DateNav render:", {
+      currentDate,
+      displayDate,
+      previousDate,
+      nextDate,
+    });
+  }
 
   const { mode } = useTheme();
 
@@ -62,7 +75,7 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
         marginBottom: theme.space[10],
       }}
     >
-      <IconButton as={Link} variant="hollow" to={`/${previousDay}`}>
+      <IconButton as={Link} variant="hollow" to={`/${previousDate}`}>
         <ArrowLeft sx={{ fill: "currentcolor" }} />
       </IconButton>
       <Heading
@@ -76,12 +89,12 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
       >
         {displayDate}
       </Heading>
-      <IconButton as={Link} variant="hollow" to={`/${nextDay}`}>
+      <IconButton as={Link} variant="hollow" to={`/${nextDate}`}>
         <ArrowRight sx={{ fill: "currentcolor" }} />
       </IconButton>
-      {!isToday() && (
+      {currentDate && !areDatesEqual(currentDate, today) && (
         <MyLink
-          to={`/${formatDateToISOString(new Date())}`}
+          to={`/${format_(getToday(), "path")}`}
           sx={{
             position: "absolute",
             bottom: "-30px",
@@ -96,6 +109,6 @@ const DateNav: React.FC<DateNavProps> = ({ date }) => {
       )}
     </Box>
   );
-};
+}
 
 export default DateNav;

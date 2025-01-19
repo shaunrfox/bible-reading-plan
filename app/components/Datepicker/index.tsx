@@ -21,11 +21,10 @@ import Button, { IconButton } from "../Button";
 import ChevronFilledLeft from "../icons/ChevronFilledLeft";
 import ChevronFilledRight from "../icons/ChevronFilledRight";
 import Rule from "../Rule";
-import { json, type LoaderFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
-import { findManyDocuments } from "~/models/document.server";
+import { Link } from "@remix-run/react";
 import Reset from "../icons/Reset";
 import theme from "~/utils/theme";
+import { createDate, format_ } from "~/utils/dateHelpers";
 
 const colStart = ["", "2", "3", "4", "5", "6", "7"];
 
@@ -39,13 +38,8 @@ function classNames(...classes: any[]) {
 // };
 
 export default function Datepicker() {
-  const today = startOfToday();
+  const today = createDate(); // Use local time
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-
-  // When creating links, ensure we format in UTC
-  const formatDateForUrl = (date: Date) => {
-    return format(date, "yyyy-MM-dd");
-  };
 
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -193,7 +187,7 @@ export default function Datepicker() {
           >
             <Button
               as={Link}
-              to={"/" + formatDateForUrl(day)}
+              to={"/" + format_(day, "path")}
               variant={isToday(day) ? "accent" : "hollow"}
               sx={{
                 width: "1.75rem",
@@ -202,7 +196,7 @@ export default function Datepicker() {
                 py: 2,
               }}
             >
-              <time dateTime={formatDateForUrl(day)}>{format(day, "d")}</time>
+              <time dateTime={format_(day, "path")}>{format(day, "d")}</time>
             </Button>
           </Box>
         ))}

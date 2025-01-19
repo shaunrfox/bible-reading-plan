@@ -24,6 +24,7 @@ import Rule from "../Rule";
 import { json, type LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getEvents } from "~/models/event.server";
+import { createDate, format_ } from "~/utils/dateHelpers";
 
 const colStart = ["", "2", "3", "4", "5", "6", "7"];
 
@@ -46,8 +47,8 @@ export default function Calendar({
   };
 }) {
   // const today = startOfToday();
-  const today = new Date();
-  const formatDateToYYYYMMDD = (date) => format(date, "yyyy-MM-dd");
+  const today = createDate();
+  const formatDateToYYYYMMDD = (date: Date) => format_(date, "path");
 
   // const [selectedDay, setSelectedDay] = useState(today);
 
