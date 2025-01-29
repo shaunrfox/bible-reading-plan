@@ -5,9 +5,11 @@ import { remixDevTools } from "remix-development-tools";
 import path from "path";
 
 export default defineConfig({
+  base: "/bible-reading-plan/",
   plugins: [
     remixDevTools(),
     remix({
+      basename: "/bible-reading-plan/",
       ssr: false,
     }),
     tsconfigPaths(),
