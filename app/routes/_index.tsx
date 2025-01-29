@@ -7,7 +7,17 @@ export default function Index() {
 
   useEffect(() => {
     const today = format_(getToday(), "path");
-    navigate(`/${today}`, { replace: true });
+    const currentPath = window.location.pathname;
+    const basename = "/bible-reading-plan";
+
+    // Only redirect if we're actually on the index route (considering basename)
+    if (
+      currentPath === basename ||
+      currentPath === `${basename}/` ||
+      currentPath === "/"
+    ) {
+      navigate(`/${today}`, { replace: true });
+    }
   }, [navigate]);
 
   return null;
