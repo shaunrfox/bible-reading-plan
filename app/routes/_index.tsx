@@ -1,18 +1,14 @@
-import { redirect, LoaderFunction } from "@remix-run/node";
+import { useEffect } from "react";
+import { useNavigate } from "@remix-run/react";
 import { format_, getToday } from "~/utils/dateHelpers";
 
-export const loader: LoaderFunction = async () => {
-  try {
-    const today = format_(getToday(), "path");
-    return redirect(`/${today}`);
-  } catch (error) {
-    console.error("Error in loader:", error);
-    throw new Response("Error loading daily readings and scripture content", {
-      status: 500,
-    });
-  }
-};
-
 export default function Index() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const today = format_(getToday(), "path");
+    navigate(`/${today}`, { replace: true });
+  }, [navigate]);
+
   return null;
 }
