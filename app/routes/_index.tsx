@@ -10,12 +10,12 @@ export default function Index() {
     const currentPath = window.location.pathname;
     const basename = "/bible-reading-plan";
 
-    // Only redirect if we're actually on the index route (considering basename)
-    if (
-      currentPath === basename ||
-      currentPath === `${basename}/` ||
-      currentPath === "/"
-    ) {
+    // Strip the basename from the current path
+    const pathWithoutBase = currentPath.replace(basename, "");
+    const cleanPath = pathWithoutBase.replace(/^\/+|\/+$/g, "");
+
+    // Only redirect if we're at the root (no additional path segments)
+    if (!cleanPath) {
       navigate(`/${today}`, { replace: true });
     }
   }, [navigate]);
