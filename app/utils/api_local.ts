@@ -38,13 +38,15 @@ export async function getDailyReading(date: string): Promise<ReadingData> {
   const year = date.substring(0, 4);
 
   try {
-    const response = await fetch(`/data/${year}/${date}.json`);
+    const response = await fetch(
+      `/bible-reading-plan/data/${year}/${date}.json`
+    );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
     return data;
-  } catch (err) {
+  } catch (err: any) {
     console.error("Error fetching data:", err);
     throw new Error(`Error loading data for ${date}: ${err.message}`);
   }

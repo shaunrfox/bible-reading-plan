@@ -110,5 +110,3 @@ export function DateNav() {
     </Box>
   );
 }
-
-export default DateNav;

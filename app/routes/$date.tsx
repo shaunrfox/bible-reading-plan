@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { json, useParams, useLocation } from "@remix-run/react";
-import { LoaderFunction } from "@remix-run/node";
 import { getDailyReading } from "~/utils/api_local";
 import theme, { modes } from "~/utils/theme";
 import { useTheme } from "@emotion/react";
 import AppHeader from "~/components/AppHeader/index";
 import Box from "~/components/Box";
-import DateNav from "~/components/DateNav/index";
+import { DateNav } from "~/components/DateNav/index";
 import Heading from "~/components/Heading";
 import Text from "~/components/Text";
 import Rule from "~/components/Rule";
