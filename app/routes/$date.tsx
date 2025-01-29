@@ -201,15 +201,15 @@ export default function DatePage() {
           <Rule sx={{ margin: "1rem 0" }} />
           <ReadingItem
             label="The Psalms"
-            reference={morning_scripture[0].full.citation}
-          ></ReadingItem>
-          <ReadingItem
-            label="Reading 1"
             reference={morning_scripture[1].full.citation}
           ></ReadingItem>
           <ReadingItem
-            label="Reading 2"
+            label="Reading 1"
             reference={morning_scripture[2].full.citation}
+          ></ReadingItem>
+          <ReadingItem
+            label="Reading 2"
+            reference={morning_scripture[3].full.citation}
           ></ReadingItem>
         </Box>
         <Box
@@ -227,15 +227,15 @@ export default function DatePage() {
           <Rule sx={{ margin: "1rem 0" }} />
           <ReadingItem
             label="The Psalms"
-            reference={evening_scripture[0].full.citation}
-          ></ReadingItem>
-          <ReadingItem
-            label="Reading 1"
             reference={evening_scripture[1].full.citation}
           ></ReadingItem>
           <ReadingItem
-            label="Reading 2"
+            label="Reading 1"
             reference={evening_scripture[2].full.citation}
+          ></ReadingItem>
+          <ReadingItem
+            label="Reading 2"
+            reference={evening_scripture[3].full.citation}
           ></ReadingItem>
         </Box>
       </Box>

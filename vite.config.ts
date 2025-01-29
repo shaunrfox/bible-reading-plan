@@ -5,7 +5,13 @@ import { remixDevTools } from "remix-development-tools";
 import path from "path";
 
 export default defineConfig({
-  plugins: [remixDevTools(), remix(), tsconfigPaths()],
+  plugins: [
+    remixDevTools(),
+    remix({
+      ssr: false,
+    }),
+    tsconfigPaths(),
+  ],
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "app"),
