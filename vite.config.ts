@@ -11,10 +11,6 @@ export default defineConfig({
     remix({
       basename: "/bible-reading-plan/",
       ssr: false,
-      ignoredRouteFiles: ["**/.*"],
-      serverModuleFormat: "esm",
-      appDirectory: "app",
-      buildDirectory: "public/build",
     }),
     tsconfigPaths(),
   ],
@@ -28,8 +24,7 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    outDir: "build",
-    manifest: true,
+    outDir: "dist",
     rollupOptions: {
       onwarn(warning, warn) {
         if (warning.code === "UNUSED_EXTERNAL_IMPORT") return;
