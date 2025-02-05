@@ -11,6 +11,10 @@ export default defineConfig({
     remix({
       basename: "/bible-reading-plan/",
       ssr: false,
+      ignoredRouteFiles: ["**/.*"],
+      serverModuleFormat: "esm",
+      appDirectory: "app",
+      buildDirectory: "public/build",
     }),
     tsconfigPaths(),
   ],
@@ -25,6 +29,13 @@ export default defineConfig({
   },
   build: {
     outDir: "build",
+    manifest: true,
+    rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === "UNUSED_EXTERNAL_IMPORT") return;
+        warn(warning);
+      },
+    },
   },
   json: {
     stringify: true,
