@@ -6,9 +6,11 @@ import { AppHeader } from '~/components/AppHeader';
 import { DateNav } from '~/components/DateNav';
 import { Box } from '~/components/Box';
 import { Heading } from '~/components/Heading';
+import { Text } from '~/components/Text';
 import { Icon } from '~/components/Icon';
 import { createDate, format_, parseURL, getToday } from '~/utils/dateHelpers';
 import { getDailyReading, type ReadingData } from '~/utils/api_local';
+import { Divider, VStack } from '@styled-system/jsx';
 
 function ReadingItem({
   label,
@@ -18,26 +20,26 @@ function ReadingItem({
   reference: string;
 }) {
   return (
-    <Box
-      className={css({
-        display: 'flex',
-        flexDirection: 'column',
-        paddingBottom: '6',
-      })}
-    >
-      <p
-        className={css({
-          textTransform: 'uppercase',
-          fontWeight: 'bold',
-          letterSpacing: 'wider',
-          color: 'mint.40',
-          fontSize: '12',
-        })}
+    <VStack mb={'20'} gap={'0'} alignItems={'flex-start'}>
+      <Text
+        fontFamily={'mono'}
+        textTransform={'uppercase'}
+        fontWeight={'bold'}
+        letterSpacing={'wider'}
+        color={{ base: 'mint.40', _dark: 'mint.50' }}
+        fontSize={'12'}
       >
         {label}
-      </p>
-      <p className={css({ fontSize: '16' })}>{reference}</p>
-    </Box>
+      </Text>
+      <Text
+        fontSize={'24'}
+        lineHeight={'tight'}
+        fontWeight={'medium'}
+        color={{ base: 'gray.94', _dark: 'gray.5' }}
+      >
+        {reference}
+      </Text>
+    </VStack>
   );
 }
 
@@ -212,6 +214,9 @@ function App() {
             justifyContent: 'center',
             gap: '8',
             w: 'full',
+            '@container wrapper (width < 500px)': {
+              flexDirection: 'column',
+            },
           })}
         >
           <Box
@@ -219,14 +224,20 @@ function App() {
               display: 'flex',
               flexDirection: 'column',
               w: 'full',
-              maxW: 'md',
-              p: '8',
+              maxW: 'sm',
+              p: '24',
+              '@container wrapper (width < 500px)': {
+                maxW: 'full',
+              },
             })}
           >
-            <Heading as="h3" level={3}>
+            <Heading as="h3" fontSize={'16'}>
               Morning Prayer
             </Heading>
-            <hr className={css({ my: '4' })} />
+            <Divider
+              my={'16'}
+              borderColor={{ base: 'gray.30', _dark: 'gray.70' }}
+            />
             <ReadingItem
               label="The Psalms"
               reference={morning_scripture[1]?.full.citation}
@@ -246,14 +257,17 @@ function App() {
               display: 'flex',
               flexDirection: 'column',
               w: 'full',
-              maxW: 'md',
-              p: '8',
+              maxW: 'sm',
+              p: '24',
             })}
           >
-            <Heading as="h3" level={3}>
+            <Heading as="h3" fontSize={'16'}>
               Evening Prayer
             </Heading>
-            <hr className={css({ my: '4' })} />
+            <Divider
+              my={'16'}
+              borderColor={{ base: 'gray.30', _dark: 'gray.70' }}
+            />
             <ReadingItem
               label="The Psalms"
               reference={evening_scripture[1]?.full.citation}

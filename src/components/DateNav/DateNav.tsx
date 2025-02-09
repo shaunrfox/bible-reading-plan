@@ -58,25 +58,36 @@ export function DateNav() {
   }
 
   return (
-    <nav className={dateNavStyles}>
+    <Box as="nav" className={dateNavStyles}>
       <Link to={`/${previousDate}`}>
-        <IconButton variant="hollow">
+        <IconButton variant="ghost">
           <Icon name="arrow-left" />
         </IconButton>
       </Link>
       <Heading
         as={'h2'}
-        level={4}
-        font="mono"
-        sx={{
+        className={css({
+          fontSize: '20',
+          fontFamily: 'mono',
           textTransform: 'uppercase',
-          letterSpacing: '1px',
-        }}
+          letterSpacing: 'widest',
+          width: 'fit',
+          '@container wrapper (width < 500px)': {
+            // order: '1',
+            // gridColumn: '1 / -1',
+            // gridRow: '1',
+            // fontFamily: 'serif',
+            // textTransform: 'none',
+            // letterSpacing: 'normal',
+            // fontWeight: 'normal',
+            fontSize: '14',
+          },
+        })}
       >
         {displayDate}
       </Heading>
       <Link to={`/${nextDate}`}>
-        <IconButton variant="hollow">
+        <IconButton variant="ghost">
           <Icon name="arrow-right" />
         </IconButton>
       </Link>
@@ -85,16 +96,29 @@ export function DateNav() {
           to={`/${format_(getToday(), 'path')}`}
           className={css({
             position: 'absolute',
-            bottom: '-32',
+            bottom: '-24',
             display: 'flex',
             alignItems: 'center',
             gap: '3',
+            fontSize: '12',
+            fontFamily: 'mono',
+            textTransform: 'uppercase',
+            letterSpacing: 'widest',
+            fontWeight: 'bold',
+            borderRadius: '4',
+            _hover: {
+              color: { base: 'gray.90', _dark: 'gray.5' },
+              textDecoration: 'underline',
+            },
+            '@container wrapper (width < 500px)': {
+              bottom: '-12',
+            },
           })}
         >
-          {/* <Icon name="reset" /> */}
+          <Icon name="arrow-counter-clockwise" size={16} />
           Today
         </Link>
       )}
-    </nav>
+    </Box>
   );
 }

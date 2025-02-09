@@ -20,7 +20,7 @@ export const globalCss = defineGlobalStyles({
   },
   body: {
     fontFamily: 'serif',
-    bg: { base: 'gray.0', _dark: 'gray.90' },
+    bg: { base: 'gray.0', _dark: 'gray.98' },
     color: { base: 'gray.60', _dark: 'gray.20' },
     fontWeight: 'normal',
   },

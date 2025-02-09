@@ -251,6 +251,22 @@ const tokens = {
     "value": "#1C1D1F",
     "variable": "var(--colors-gray-90)"
   },
+  "colors.gray.92": {
+    "value": "#161719",
+    "variable": "var(--colors-gray-92)"
+  },
+  "colors.gray.94": {
+    "value": "#111113",
+    "variable": "var(--colors-gray-94)"
+  },
+  "colors.gray.96": {
+    "value": "#0b0c0c",
+    "variable": "var(--colors-gray-96)"
+  },
+  "colors.gray.98": {
+    "value": "#060606",
+    "variable": "var(--colors-gray-98)"
+  },
   "colors.gray.100": {
     "value": "#000000",
     "variable": "var(--colors-gray-100)"
@@ -699,50 +715,6 @@ const tokens = {
     "value": "'IBM Plex Mono', Andale Mono, monaco, Consolas, Lucida Console, monospace",
     "variable": "var(--fonts-mono)"
   },
-  "fontSizes.0": {
-    "value": "0",
-    "variable": "var(--font-sizes-0)"
-  },
-  "fontSizes.1": {
-    "value": "0.0625rem",
-    "variable": "var(--font-sizes-1)"
-  },
-  "fontSizes.2": {
-    "value": "0.125rem",
-    "variable": "var(--font-sizes-2)"
-  },
-  "fontSizes.3": {
-    "value": "0.1875rem",
-    "variable": "var(--font-sizes-3)"
-  },
-  "fontSizes.4": {
-    "value": "0.25rem",
-    "variable": "var(--font-sizes-4)"
-  },
-  "fontSizes.5": {
-    "value": "0.3125rem",
-    "variable": "var(--font-sizes-5)"
-  },
-  "fontSizes.6": {
-    "value": "0.375rem",
-    "variable": "var(--font-sizes-6)"
-  },
-  "fontSizes.7": {
-    "value": "0.4375rem",
-    "variable": "var(--font-sizes-7)"
-  },
-  "fontSizes.8": {
-    "value": "0.5rem",
-    "variable": "var(--font-sizes-8)"
-  },
-  "fontSizes.9": {
-    "value": "0.5625rem",
-    "variable": "var(--font-sizes-9)"
-  },
-  "fontSizes.10": {
-    "value": "0.625rem",
-    "variable": "var(--font-sizes-10)"
-  },
   "fontSizes.12": {
     "value": "0.75rem",
     "variable": "var(--font-sizes-12)"
@@ -775,10 +747,6 @@ const tokens = {
     "value": "3rem",
     "variable": "var(--font-sizes-48)"
   },
-  "fontSizes.56": {
-    "value": "3.5rem",
-    "variable": "var(--font-sizes-56)"
-  },
   "fontSizes.64": {
     "value": "4rem",
     "variable": "var(--font-sizes-64)"
@@ -794,74 +762,6 @@ const tokens = {
   "fontSizes.96": {
     "value": "6rem",
     "variable": "var(--font-sizes-96)"
-  },
-  "fontSizes.full": {
-    "value": "100%",
-    "variable": "var(--font-sizes-full)"
-  },
-  "fontSizes.min": {
-    "value": "min-content",
-    "variable": "var(--font-sizes-min)"
-  },
-  "fontSizes.max": {
-    "value": "max-content",
-    "variable": "var(--font-sizes-max)"
-  },
-  "fontSizes.fit": {
-    "value": "fit-content",
-    "variable": "var(--font-sizes-fit)"
-  },
-  "fontSizes.xs": {
-    "value": "20rem",
-    "variable": "var(--font-sizes-xs)"
-  },
-  "fontSizes.sm": {
-    "value": "24rem",
-    "variable": "var(--font-sizes-sm)"
-  },
-  "fontSizes.md": {
-    "value": "28rem",
-    "variable": "var(--font-sizes-md)"
-  },
-  "fontSizes.lg": {
-    "value": "32rem",
-    "variable": "var(--font-sizes-lg)"
-  },
-  "fontSizes.xl": {
-    "value": "36rem",
-    "variable": "var(--font-sizes-xl)"
-  },
-  "fontSizes.2xl": {
-    "value": "42rem",
-    "variable": "var(--font-sizes-2xl)"
-  },
-  "fontSizes.3xl": {
-    "value": "48rem",
-    "variable": "var(--font-sizes-3xl)"
-  },
-  "fontSizes.4xl": {
-    "value": "56rem",
-    "variable": "var(--font-sizes-4xl)"
-  },
-  "fontSizes.5xl": {
-    "value": "64rem",
-    "variable": "var(--font-sizes-5xl)"
-  },
-  "fontSizes.6xl": {
-    "value": "72rem",
-    "variable": "var(--font-sizes-6xl)"
-  },
-  "fontSizes.7xl": {
-    "value": "80rem",
-    "variable": "var(--font-sizes-7xl)"
-  },
-  "fontSizes.8xl": {
-    "value": "90rem",
-    "variable": "var(--font-sizes-8xl)"
-  },
-  "fontSizes.prose": {
-    "value": "65ch",
-    "variable": "var(--font-sizes-prose)"
   },
   "fontWeights.light": {
     "value": 300,
@@ -1263,6 +1163,18 @@ const tokens = {
     "value": "100%",
     "variable": "var(--radii-100)"
   },
+  "transitions.default": {
+    "value": "all 0.3s ease",
+    "variable": "var(--transitions-default)"
+  },
+  "transitions.fast": {
+    "value": "all 0.1s ease",
+    "variable": "var(--transitions-fast)"
+  },
+  "transitions.slow": {
+    "value": "all 0.5s ease",
+    "variable": "var(--transitions-slow)"
+  },
   "breakpoints.xs": {
     "value": "480px",
     "variable": "var(--breakpoints-xs)"
@@ -1518,6 +1430,22 @@ const tokens = {
   "colors.colorPalette.90": {
     "value": "var(--colors-color-palette-90)",
     "variable": "var(--colors-color-palette-90)"
+  },
+  "colors.colorPalette.92": {
+    "value": "var(--colors-color-palette-92)",
+    "variable": "var(--colors-color-palette-92)"
+  },
+  "colors.colorPalette.94": {
+    "value": "var(--colors-color-palette-94)",
+    "variable": "var(--colors-color-palette-94)"
+  },
+  "colors.colorPalette.96": {
+    "value": "var(--colors-color-palette-96)",
+    "variable": "var(--colors-color-palette-96)"
+  },
+  "colors.colorPalette.98": {
+    "value": "var(--colors-color-palette-98)",
+    "variable": "var(--colors-color-palette-98)"
   },
   "colors.colorPalette.100": {
     "value": "var(--colors-color-palette-100)",

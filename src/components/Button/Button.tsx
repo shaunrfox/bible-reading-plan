@@ -14,7 +14,9 @@ import type { SystemStyleObject } from '@styled-system/types';
 // Panda's css() function will only use the valid style properties from the props object
 // Any remaining props (like onClick) will be properly handled by the spread operator
 
-export interface ButtonProps extends BoxProps<'button'>, Omit<SystemStyleObject, keyof ButtonVariantProps> {
+export interface ButtonProps
+  extends BoxProps<'button'>,
+    Omit<SystemStyleObject, keyof ButtonVariantProps> {
   variant?: 'primary' | 'standard' | 'hollow' | 'ghost' | 'cta' | 'danger';
   size?: 'standard' | 'small' | 'large';
   href?: string;
@@ -68,21 +70,12 @@ export const Button = React.forwardRef<
   ButtonProps
 >(
   (
-    {
-      variant = 'standard',
-      size = 'standard',
-      href,
-      className,
-      children,
-      loading,
-      disabled,
-      ...props
-    },
+    { variant, size, href, className, children, loading, disabled, ...props },
     ref,
   ) => {
     const trulyDisabled = loading || disabled;
     const Component = href ? 'a' : 'button';
-    
+
     return (
       <Box
         ref={ref as React.Ref<HTMLButtonElement | HTMLAnchorElement>}

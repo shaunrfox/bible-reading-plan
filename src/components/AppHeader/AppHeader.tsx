@@ -1,8 +1,12 @@
+import { Box } from '~/components/Box';
 import { Heading } from '~/components/Heading';
 import { Text } from '~/components/Text';
-import { format_, getToday, today } from '~/utils/dateHelpers';
-import { VStack } from '@styled-system/jsx';
-import { pageHeaderStyles, pageTitleStyles } from './appHeaderStyles';
+import { format_, getToday } from '~/utils/dateHelpers';
+import {
+  pageDateStyles,
+  pageHeaderStyles,
+  pageTitleStyles,
+} from './appHeaderStyles';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 interface AppHeaderProps {
   season?: string;
@@ -11,18 +15,21 @@ interface AppHeaderProps {
 export function AppHeader({ season }: AppHeaderProps) {
   return (
     <header className={pageHeaderStyles}>
-      <VStack gap={'2'}>
-        <a href={`/`}>
-          <Heading as={'h1'} className={pageTitleStyles}>
-            Daily Readings
-          </Heading>
-        </a>
-      </VStack>
-      <VStack gap={'2'}>
-        <Text>{format_(getToday(), 'short')}</Text>
-        <Text level={'16'}>{season}</Text>
-      </VStack>
+      <a href={`/`}>
+        <Heading as={'h1'} className={pageTitleStyles}>
+          Daily Readings
+        </Heading>
+      </a>
+
       <ThemeSwitcher />
+      <Box className={pageDateStyles}>
+        <Text color={'current'} family="sans">
+          {format_(getToday(), 'short')}
+        </Text>
+        <Text color={'current'} size={'12'} family={'mono'}>
+          {season}
+        </Text>
+      </Box>
     </header>
   );
 }

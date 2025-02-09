@@ -24,5 +24,7 @@ dist-ssr
 *.sw?
 
 ## Panda
-styled-system
-styled-system-studio
+styled-system/*
+/styled-system
+styled-system-studio/*
+/styled-system-studio

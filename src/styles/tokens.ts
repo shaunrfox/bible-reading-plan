@@ -19,6 +19,10 @@ export const colors = {
     '70': { value: '#3D4551' },
     '80': { value: '#2D2E2F' },
     '90': { value: '#1C1D1F' },
+    '92': { value: '#161719' },
+    '94': { value: '#111113' },
+    '96': { value: '#0b0c0c' },
+    '98': { value: '#060606' },
     '100': { value: '#000000' },
   },
   blue: {
@@ -588,6 +592,18 @@ export const keyframes = {
       transform: 'none',
       animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
     },
+  },
+};
+
+export const transitions = {
+  default: {
+    value: 'all 0.3s ease',
+  },
+  fast: {
+    value: 'all 0.1s ease',
+  },
+  slow: {
+    value: 'all 0.5s ease',
   },
 };
 

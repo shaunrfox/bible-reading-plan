@@ -30,7 +30,7 @@ const theme = {
     animations: tokens.animations,
     colors: tokens.colors,
     fonts: tokens.fonts,
-    fontSizes: tokens.sizes,
+    fontSizes: tokens.fontSizes,
     fontWeights: tokens.fontWeights,
     sizes: tokens.sizes,
     spacing: tokens.sizes,
@@ -39,6 +39,7 @@ const theme = {
     keyframes: tokens.keyframes,
     containerSizes: tokens.containerSizes,
     breakpoints: tokens.breakpoints,
+    transitions: tokens.transitions,
   }),
   semanticTokens: defineSemanticTokens({
     colors: {
@@ -102,6 +103,7 @@ export default defineConfig({
       sizes: theme.tokens.sizes,
       spacing: theme.tokens.sizes,
       radii: theme.tokens.radii,
+      transitions: theme.tokens.transitions,
     },
     semanticTokens: {
       colors: theme.semanticTokens.colors,
