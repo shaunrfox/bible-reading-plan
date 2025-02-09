@@ -2,6 +2,36 @@
 import type { AnySelector, Selectors } from './selectors';
 
 export interface Conditions {
+	/** `[data-color-mode=light] &` */
+	"_light": string
+	/** `[data-color-mode=dark] &` */
+	"_dark": string
+	/** `&:is(:checked, [data-checked], [aria-checked=true], [data-state=checked])` */
+	"_checked": string
+	/** `&:is(:indeterminate, [data-indeterminate], [aria-checked=mixed], [data-state=indeterminate])` */
+	"_indeterminate": string
+	/** `&:is([data-state=closed])` */
+	"_closed": string
+	/** `&:is([open], [data-state=open])` */
+	"_open": string
+	/** `&:is([hidden])` */
+	"_hidden": string
+	/** `&:is([data-current])` */
+	"_current": string
+	/** `&:is([data-today])` */
+	"_today": string
+	/** `&:is(:placeholder-shown, [data-placeholder-shown])` */
+	"_placeholderShown": string
+	/** `&:is([aria-collapsed=true], [data-collapsed], [data-state="collapsed"])` */
+	"_collapsed": string
+	/** `@container (max-width: 560px)` */
+	"_containerSmall": string
+	/** `@container (min-width: 561px) and (max-width: 999px)` */
+	"_containerMedium": string
+	/** `@container (min-width: 1000px)` */
+	"_containerLarge": string
+	/** `&:is([data-selected])` */
+	"_selected": string
 	/** `&:is(:hover, [data-hover])` */
 	"_hover": string
 	/** `&:is(:focus, [data-focus])` */
@@ -24,8 +54,6 @@ export interface Conditions {
 	"_readWrite": string
 	/** `&:is(:empty, [data-empty])` */
 	"_empty": string
-	/** `&:is(:checked, [data-checked], [aria-checked=true], [data-state="checked"])` */
-	"_checked": string
 	/** `&:enabled` */
 	"_enabled": string
 	/** `&:is([aria-expanded=true], [data-expanded], [data-state="expanded"])` */
@@ -108,8 +136,6 @@ export interface Conditions {
 	"_groupExpanded": string
 	/** `.group:invalid &` */
 	"_groupInvalid": string
-	/** `&:is(:indeterminate, [data-indeterminate], [aria-checked=mixed], [data-state="indeterminate"])` */
-	"_indeterminate": string
 	/** `&:is(:required, [data-required], [aria-required=true])` */
 	"_required": string
 	/** `&:is(:valid, [data-valid])` */
@@ -124,12 +150,8 @@ export interface Conditions {
 	"_outOfRange": string
 	/** `&::placeholder, &[data-placeholder]` */
 	"_placeholder": string
-	/** `&:is(:placeholder-shown, [data-placeholder-shown])` */
-	"_placeholderShown": string
 	/** `&:is([aria-pressed=true], [data-pressed])` */
 	"_pressed": string
-	/** `&:is([aria-selected=true], [data-selected])` */
-	"_selected": string
 	/** `&:is([aria-grabbed=true], [data-grabbed])` */
 	"_grabbed": string
 	/** `&[data-state=under-value]` */
@@ -142,24 +164,14 @@ export interface Conditions {
 	"_default": string
 	/** `&:optional` */
 	"_optional": string
-	/** `&:is([open], [data-open], [data-state="open"])` */
-	"_open": string
-	/** `&:is([closed], [data-closed], [data-state="closed"])` */
-	"_closed": string
 	/** `&is(:fullscreen, [data-fullscreen])` */
 	"_fullscreen": string
 	/** `&:is([data-loading], [aria-busy=true])` */
 	"_loading": string
-	/** `&:is([hidden], [data-hidden])` */
-	"_hidden": string
-	/** `&:is([aria-current=true], [data-current])` */
-	"_current": string
 	/** `&[aria-current=page]` */
 	"_currentPage": string
 	/** `&[aria-current=step]` */
 	"_currentStep": string
-	/** `&[data-today]` */
-	"_today": string
 	/** `&[data-unavailable]` */
 	"_unavailable": string
 	/** `&[data-range-start]` */
@@ -180,10 +192,6 @@ export interface Conditions {
 	"_landscape": string
 	/** `@media (orientation: portrait)` */
 	"_portrait": string
-	/** `.dark &` */
-	"_dark": string
-	/** `.light &` */
-	"_light": string
 	/** `@media (prefers-color-scheme: dark)` */
 	"_osDark": string
 	/** `@media (prefers-color-scheme: light)` */
@@ -212,6 +220,12 @@ export interface Conditions {
 	"_icon": string
 	/** `@starting-style` */
 	"_starting": string
+	/** `@media screen and (min-width: 30rem)` */
+	"xs": string
+	/** `@media screen and (min-width: 30rem) and (max-width: 39.9975rem)` */
+	"xsOnly": string
+	/** `@media screen and (max-width: 29.9975rem)` */
+	"xsDown": string
 	/** `@media screen and (min-width: 40rem)` */
 	"sm": string
 	/** `@media screen and (min-width: 40rem) and (max-width: 47.9975rem)` */
@@ -242,6 +256,16 @@ export interface Conditions {
 	"2xlOnly": string
 	/** `@media screen and (max-width: 95.9975rem)` */
 	"2xlDown": string
+	/** `@media screen and (min-width: 30rem) and (max-width: 39.9975rem)` */
+	"xsToSm": string
+	/** `@media screen and (min-width: 30rem) and (max-width: 47.9975rem)` */
+	"xsToMd": string
+	/** `@media screen and (min-width: 30rem) and (max-width: 63.9975rem)` */
+	"xsToLg": string
+	/** `@media screen and (min-width: 30rem) and (max-width: 79.9975rem)` */
+	"xsToXl": string
+	/** `@media screen and (min-width: 30rem) and (max-width: 95.9975rem)` */
+	"xsTo2xl": string
 	/** `@media screen and (min-width: 40rem) and (max-width: 47.9975rem)` */
 	"smToMd": string
 	/** `@media screen and (min-width: 40rem) and (max-width: 63.9975rem)` */
