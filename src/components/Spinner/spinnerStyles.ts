@@ -7,9 +7,10 @@ export const spinnerStyle = cva({
     borderWidth: '3',
     borderStyle: 'solid',
     borderColor: 'transparent',
-    borderTopColor: 'slate.90',
-    borderBottomColor: 'slate.90',
-    animation: 'spin 1s infinite linear',
+    borderTopColor: 'gray.90',
+    borderBottomColor: 'gray.90',
+    animation: 'spin',
+    // @ts-ignore
     filter: 'invert(1)',
     mixBlendMode: 'difference',
     isolation: 'isolate',
@@ -28,11 +29,11 @@ export const spinnerStyle = cva({
         height: '32',
         minHeight: '32',
       },
-    }
+    },
   },
   defaultVariants: {
-    size: 'standard'
-  }
+    size: 'standard',
+  },
 });
 
 export type SpinnerVariantProps = RecipeVariantProps<typeof spinnerStyle>;

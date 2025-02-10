@@ -1,20 +1,20 @@
 import { cx } from '@styled-system/css';
 import { iconStyle } from './iconStyle';
 import { IconNamesList } from './icons';
-import { type HTMLStyledProps } from '@styled-system/types';
-import { Box } from '../Box/Box';
+import { type SizeToken } from '@styled-system/tokens';
+import { Box, type BoxProps } from '../Box/Box';
 
-type IconProps = HTMLStyledProps<'svg'> & {
+export interface IconProps extends BoxProps<'svg'> {
   name: IconNamesList;
-  className?: string;
-  size?: number;
-};
+  size?: SizeToken;
+}
 
-export function Icon({ name, className, size = 24, ...props }: IconProps) {
+export const Icon = ({ name, size = '24', className, ...props }: IconProps) => {
   return (
-    <Box
+    // @ts-ignore
+    <Box<'svg'>
       as="svg"
-      viewBox="0 0 24 24"
+      viewBox={`0 0 ${size} ${size}`}
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
@@ -24,4 +24,4 @@ export function Icon({ name, className, size = 24, ...props }: IconProps) {
       <use xlinkHref={`/sprite.svg#${name}`} />
     </Box>
   );
-}
+};

@@ -8,7 +8,7 @@ const textBase = {
 };
 
 const textVariants = {
-  size: {
+  fontSize: {
     '12': { fontSize: '12' },
     '14': { fontSize: '14' },
     '16': { fontSize: '16' },
@@ -95,7 +95,7 @@ export const textRecipe = defineRecipe({
   base: textBase,
   variants: { ...textVariants },
   defaultVariants: {
-    size: '16',
+    fontSize: '16',
     family: 'serif',
   },
 });
@@ -116,7 +116,7 @@ export const linkRecipe = defineRecipe({
   base: linkBase,
   variants: linkVariants,
   defaultVariants: {
-    size: '16',
+    fontSize: '16',
     family: 'serif',
   },
 });

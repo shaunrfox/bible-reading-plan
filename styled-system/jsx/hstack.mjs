@@ -2,7 +2,7 @@ import { createElement, forwardRef } from 'react'
 
 import { splitProps } from '../helpers.mjs';
 import { getHstackStyle } from '../patterns/hstack.mjs';
-import { styled } from './factory.mjs';
+import { panda } from './factory.mjs';
 
 export const HStack = /* @__PURE__ */ forwardRef(function HStack(props, ref) {
   const [patternProps, restProps] = splitProps(props, ["justify","gap"])
@@ -10,5 +10,5 @@ export const HStack = /* @__PURE__ */ forwardRef(function HStack(props, ref) {
 const styleProps = getHstackStyle(patternProps)
 const mergedProps = { ref, ...styleProps, ...restProps }
 
-return createElement(styled.div, mergedProps)
+return createElement(panda.div, mergedProps)
   })

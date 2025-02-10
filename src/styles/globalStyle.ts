@@ -40,7 +40,7 @@ export const globalCss = defineGlobalStyles({
     fontSize: '1em',
   },
   table: {
-    borderColor: 'currentcolor',
+    borderColor: 'current',
   },
   'button, input, optgroup, select, textarea': {
     fontFamily: 'inherit',

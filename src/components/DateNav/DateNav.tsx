@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Box } from '~/components/Box';
 import { Heading } from '~/components/Heading';
 import { IconButton } from '~/components/IconButton';
-import { Icon } from '../Icon';
+import { Icon } from '~/components/Icon';
 import { css } from '@styled-system/css';
 import {
   format_,
@@ -14,10 +14,6 @@ import {
   getNextDate,
 } from '~/utils/dateHelpers';
 import { dateNavStyles } from './dateNavStyles';
-
-// type DateNavProps = {
-//   date: string; // ISO date string
-// };
 
 export function DateNav() {
   const [currentDate, setCurrentDate] = useState<Date | null>(null);
@@ -49,21 +45,13 @@ export function DateNav() {
     displayDate = format_(currentDate, 'short');
     previousDate = format_(getPreviousDate(currentDate), 'path');
     nextDate = format_(getNextDate(currentDate), 'path');
-    // console.log("DateNav render:", {
-    //   currentDate,
-    //   displayDate,
-    //   previousDate,
-    //   nextDate,
-    // });
   }
 
   return (
     <Box as="nav" className={dateNavStyles}>
-      <Link to={`/${previousDate}`}>
-        <IconButton variant="ghost">
-          <Icon name="arrow-left" />
-        </IconButton>
-      </Link>
+      <IconButton variant="ghost" as={Link} to={`/${previousDate}`}>
+        <Icon name="arrow-left" />
+      </IconButton>
       <Heading
         as={'h2'}
         className={css({
@@ -73,24 +61,15 @@ export function DateNav() {
           letterSpacing: 'widest',
           width: 'fit',
           '@container wrapper (width < 500px)': {
-            // order: '1',
-            // gridColumn: '1 / -1',
-            // gridRow: '1',
-            // fontFamily: 'serif',
-            // textTransform: 'none',
-            // letterSpacing: 'normal',
-            // fontWeight: 'normal',
             fontSize: '14',
           },
         })}
       >
         {displayDate}
       </Heading>
-      <Link to={`/${nextDate}`}>
-        <IconButton variant="ghost">
-          <Icon name="arrow-right" />
-        </IconButton>
-      </Link>
+      <IconButton variant="ghost" as={Link} to={`/${nextDate}`}>
+        <Icon name="arrow-right" />
+      </IconButton>
       {currentDate && !areDatesEqual(currentDate, today) && (
         <Link
           to={`/${format_(getToday(), 'path')}`}
@@ -115,7 +94,7 @@ export function DateNav() {
             },
           })}
         >
-          <Icon name="arrow-counter-clockwise" size={16} />
+          <Icon name="arrow-counter-clockwise" size={'16'} />
           Today
         </Link>
       )}

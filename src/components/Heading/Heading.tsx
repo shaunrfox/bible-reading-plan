@@ -1,39 +1,41 @@
 import React from 'react';
-import { Box, BoxProps } from '../Box';
+import { Box, type BoxProps } from '~/components/Box';
 import { heading, type HeadingVariantProps } from '@styled-system/recipes';
-import { cx, css } from '@styled-system/css';
-import type { SystemStyleObject } from '@styled-system/types';
+import { cx } from '@styled-system/css';
+
+// A helper to correctly infer the ref type based on the rendered element
+type PolymorphicRef<E extends React.ElementType> =
+  React.ComponentPropsWithRef<E>['ref'];
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4';
 
-export interface HeadingProps
-  extends Omit<BoxProps<HeadingElement>, keyof SystemStyleObject>,
-    SystemStyleObject {
+export interface HeadingProps<E extends React.ElementType = 'p'>
+  // @ts-ignore
+  extends BoxProps<E> {
   variants?: HeadingVariantProps;
-  as?: HeadingElement;
+  as?: E | HeadingElement;
   className?: string;
+  children?: React.ReactNode;
 }
 
-export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
-  ({ as = 'h2', className, children, variants, ...restProps }, ref) => {
-    // Extract non-style props that shouldn't be passed to css()
-    const { onClick, onMouseEnter, onMouseLeave, ...styleProps } = restProps;
+export const Heading = React.forwardRef(function Heading<
+  E extends React.ElementType = 'h2',
+>(
+  { as, className, children, variants, ...props }: HeadingProps<E>,
+  ref: PolymorphicRef<E>,
+) {
+  const Component = as || 'h2';
 
-    const elementProps = {
-      onClick,
-      onMouseEnter,
-      onMouseLeave,
-    };
-
-    return (
-      <Box
-        as={as}
-        ref={ref}
-        className={cx(heading({ as, ...variants }), css(styleProps), className)}
-        {...elementProps}
-      >
-        {children}
-      </Box>
-    );
-  },
-);
+  return (
+    <Box
+      as={Component}
+      ref={ref}
+      className={cx(heading({ ...variants }), className)}
+      {...props}
+    >
+      {children}
+    </Box>
+  );
+}) as <E extends React.ElementType = 'h2'>(
+  props: HeadingProps<E> & { ref?: PolymorphicRef<E> },
+) => JSX.Element;

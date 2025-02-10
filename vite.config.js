@@ -10,7 +10,7 @@ export default defineConfig({
     dts({
       include: ['src/components', 'src/hooks', 'src/utils'],
       outDir: 'dist',
-      tsconfigPath: './tsconfig.app.json',
+      tsconfigPath: './tsconfig.json',
     }),
   ],
   resolve: {

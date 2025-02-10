@@ -11,7 +11,7 @@ export type ComponentProps<T extends ElementType> = DistributiveOmit<ComponentPr
   ref?: Ref<ElementRef<T>>
 }
 
-export interface StyledComponent<T extends ElementType, P extends Dict = {}> {
+export interface PandaComponent<T extends ElementType, P extends Dict = {}> {
   (props: JsxHTMLProps<ComponentProps<T>, Assign<JsxStyleProps, P>>): JSX.Element
   displayName?: string
 }
@@ -28,12 +28,12 @@ interface JsxFactoryOptions<TProps extends Dict> {
 
 export type JsxRecipeProps<T extends ElementType, P extends Dict> = JsxHTMLProps<ComponentProps<T>, P>;
 
-export type JsxElement<T extends ElementType, P extends Dict> = T extends StyledComponent<infer A, infer B>
-  ? StyledComponent<A, Pretty<DistributiveUnion<P, B>>>
-  : StyledComponent<T, P>
+export type JsxElement<T extends ElementType, P extends Dict> = T extends PandaComponent<infer A, infer B>
+  ? PandaComponent<A, Pretty<DistributiveUnion<P, B>>>
+  : PandaComponent<T, P>
 
 export interface JsxFactory {
-  <T extends ElementType>(component: T): StyledComponent<T, {}>
+  <T extends ElementType>(component: T): PandaComponent<T, {}>
   <T extends ElementType, P extends RecipeVariantRecord>(component: T, recipe: RecipeDefinition<P>, options?: JsxFactoryOptions<JsxRecipeProps<T, RecipeSelection<P>>>): JsxElement<
     T,
     RecipeSelection<P>
@@ -42,11 +42,11 @@ export interface JsxFactory {
 }
 
 export type JsxElements = {
-  [K in keyof JSX.IntrinsicElements]: StyledComponent<K, {}>
+  [K in keyof JSX.IntrinsicElements]: PandaComponent<K, {}>
 }
 
-export type Styled = JsxFactory & JsxElements
+export type Panda = JsxFactory & JsxElements
 
-export type HTMLStyledProps<T extends ElementType> = JsxHTMLProps<ComponentProps<T>, JsxStyleProps>
+export type HTMLPandaProps<T extends ElementType> = JsxHTMLProps<ComponentProps<T>, JsxStyleProps>
 
-export type StyledVariantProps<T extends StyledComponent<any, any>> = T extends StyledComponent<any, infer Props> ? Props : never
+export type PandaVariantProps<T extends PandaComponent<any, any>> = T extends PandaComponent<any, infer Props> ? Props : never

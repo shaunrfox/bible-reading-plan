@@ -10,11 +10,7 @@ import { globalCss } from './src/styles/globalStyle';
 import { buttonRecipe, iconButtonRecipe } from './src/recipes/button';
 import { inputRecipe } from './src/recipes/input';
 import { textareaRecipe } from './src/recipes/textarea';
-import {
-  textRecipe,
-  headingRecipe,
-  linkRecipe,
-} from './src/recipes/typography';
+import { textRecipe, headingRecipe, linkRecipe } from './src/recipes/text';
 
 // using pandas methods to define type-safe tokens
 const theme = {
@@ -35,11 +31,11 @@ const theme = {
     sizes: tokens.sizes,
     spacing: tokens.sizes,
     radii: tokens.radii,
-    filters: tokens.filters,
+    // filters: tokens.filters,
     keyframes: tokens.keyframes,
     containerSizes: tokens.containerSizes,
     breakpoints: tokens.breakpoints,
-    transitions: tokens.transitions,
+    // transitions: tokens.transitions,
   }),
   semanticTokens: defineSemanticTokens({
     colors: {
@@ -59,7 +55,8 @@ export default defineConfig({
   presets: ['@pandacss/dev/presets', '@pandacss/preset-base'],
   gitignore: true,
   jsxFramework: 'react',
-  jsxFactory: 'styled',
+  jsxStyleProps: 'all',
+  jsxFactory: 'panda',
   watch: true,
   include: ['./src/**/*.{js,jsx,ts,tsx}', './pages/**/*.{js,jsx,ts,tsx}'],
   preflight: true,
@@ -103,7 +100,8 @@ export default defineConfig({
       sizes: theme.tokens.sizes,
       spacing: theme.tokens.sizes,
       radii: theme.tokens.radii,
-      transitions: theme.tokens.transitions,
+      // filters: theme.tokens.filters,
+      // transitions: theme.tokens.transitions,
     },
     semanticTokens: {
       colors: theme.semanticTokens.colors,
@@ -172,6 +170,8 @@ export default defineConfig({
     containerLarge: '@container (min-width: 1000px)',
     selected: '&:is([data-selected])',
   },
+
+  importMap: '@styled-system',
 
   // The output directory for your css system
   outdir: 'styled-system',

@@ -8,9 +8,10 @@ import { Box } from '~/components/Box';
 import { Heading } from '~/components/Heading';
 import { Text } from '~/components/Text';
 import { Icon } from '~/components/Icon';
-import { createDate, format_, parseURL, getToday } from '~/utils/dateHelpers';
+import { createDate, format_, getToday } from '~/utils/dateHelpers';
 import { getDailyReading, type ReadingData } from '~/utils/api_local';
 import { Divider, VStack } from '@styled-system/jsx';
+import { formatReference } from '~/utils/formatReference';
 
 function ReadingItem({
   label,
@@ -22,7 +23,7 @@ function ReadingItem({
   return (
     <VStack mb={'20'} gap={'0'} alignItems={'flex-start'}>
       <Text
-        fontFamily={'mono'}
+        family={'mono'}
         textTransform={'uppercase'}
         fontWeight={'bold'}
         letterSpacing={'wider'}
@@ -36,6 +37,7 @@ function ReadingItem({
         lineHeight={'tight'}
         fontWeight={'medium'}
         color={{ base: 'gray.94', _dark: 'gray.5' }}
+        data-reference={formatReference(reference)}
       >
         {reference}
       </Text>
