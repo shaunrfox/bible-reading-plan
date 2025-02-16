@@ -1,18 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import dts from 'vite-plugin-dts';
 import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    dts({
-      include: ['src/components', 'src/hooks', 'src/utils'],
-      outDir: 'dist',
-      tsconfigPath: './tsconfig.json',
-    }),
-  ],
+  plugins: [react()],
   resolve: {
     alias: [
       { find: '~', replacement: path.resolve(__dirname, './src') },
@@ -28,10 +20,10 @@ export default defineConfig({
     : {
         build: {
           lib: {
-            name: 'okShaunComponents',
+            name: 'bible-reading-plan',
             fileName: (format) => `ok-shaun-components.${format}.js`,
             entry: './lib/main.ts',
-            formats: ['es', 'cjs', 'umd'],
+            formats: ['es'],
           },
           rollupOptions: {
             external: ['react', 'react-dom', 'react/jsx-runtime'],

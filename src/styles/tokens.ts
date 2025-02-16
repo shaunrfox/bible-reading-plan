@@ -1,7 +1,11 @@
-import { defineTextStyles } from '@pandacss/dev';
+// https://github.com/chakra-ui/panda/tree/4b70f29a14e98d9a0b450273704d2565e3f2d0bd/packages/preset-panda/src
+
+import { defineTextStyles, defineStyles } from '@pandacss/dev';
 
 export const colors = {
   transparent: { value: 'transparent' },
+  black: { value: '#000000' },
+  white: { value: '#FFFFFF' },
   current: { value: 'currentColor' },
   gray: {
     '0': { value: '#FFFFFF' },
@@ -25,6 +29,24 @@ export const colors = {
     '98': { value: '#060606' },
     '100': { value: '#000000' },
   },
+  slate: {
+    '0': { value: '#FFFFFF' },
+    '1': { value: '#FAFAFA' },
+    '2': { value: '#F9F8F6' },
+    '3': { value: '#F7F5F3' },
+    '4': { value: '#F6F3EF' },
+    '5': { value: '#F4F0EB' },
+    '10': { value: '#E3E1DE' },
+    '20': { value: '#CBCAC8' },
+    '30': { value: '#AFADAB' },
+    '40': { value: '#939190' },
+    '50': { value: '#767675' },
+    '60': { value: '#5F5F5E' },
+    '70': { value: '#474747' },
+    '80': { value: '#2E2E2E' },
+    '90': { value: '#1E1E1E' },
+    '100': { value: '#000000' },
+  },
   blue: {
     '5': { value: '#E8F5FF' },
     '10': { value: '#CFE8FF' },
@@ -38,15 +60,15 @@ export const colors = {
     '90': { value: '#11181D' },
   },
   mint: {
-    '5': { value: '#D5FBF3' },
-    '10': { value: '#7EFBE1' },
-    '20': { value: '#29E1CB' },
-    '30': { value: '#1DC2AE' },
-    '40': { value: '#00A398' },
-    '50': { value: '#008480' },
-    '60': { value: '#0F6460' },
-    '70': { value: '#0B4B3F' },
-    '80': { value: '#123131' },
+    5: { value: '#D5FBF3' },
+    10: { value: '#7EFBE1' },
+    20: { value: '#29E1CB' },
+    30: { value: '#1DC2AE' },
+    40: { value: '#00A398' },
+    50: { value: '#008480' },
+    60: { value: '#0F6460' },
+    70: { value: '#0B4B3F' },
+    80: { value: '#123131' },
   },
   cyan: {
     '5': { value: '#E7F6F8' },
@@ -61,6 +83,22 @@ export const colors = {
     '90': { value: '#111819' },
   },
   red: {
+    '1': { value: '#FFF9FA' },
+    '2': { value: '#FFF3F5' },
+    '3': { value: '#FFEEF0' },
+    '4': { value: '#FFE8EB' },
+    '5': { value: '#FFE2E6' },
+    '10': { value: '#FFB1B8' },
+    '20': { value: '#FF7F8A' },
+    '30': { value: '#FF4D5B' },
+    '40': { value: '#FE1D2D' },
+    '50': { value: '#E50513' },
+    '60': { value: '#B3000E' },
+    '70': { value: '#810009' },
+    '80': { value: '#4F0004' },
+    '90': { value: '#200000' },
+  },
+  redOrange: {
     '5': { value: '#FFF3F2' },
     '10': { value: '#FDE0DB' },
     '20': { value: '#FDB8AE' },
@@ -70,6 +108,7 @@ export const colors = {
     '60': { value: '#B50909' },
     '70': { value: '#8B0A03' },
     '80': { value: '#5C1111' },
+    '90': { value: '#200100' },
   },
   orange: {
     '5': { value: '#fef2e4' },
@@ -81,22 +120,6 @@ export const colors = {
     '60': { value: '#8c471c' },
     '70': { value: '#5f3617' },
     '80': { value: '#352313' },
-  },
-  yellow: {
-    '1': { value: '#FFFDF3' },
-    '2': { value: '#FFFBE7' },
-    '3': { value: '#FFF9DA' },
-    '4': { value: '#FFF7CE' },
-    '5': { value: '#FFF5C2' },
-    '10': { value: '#FEE685' },
-    '20': { value: '#FACE00' },
-    '30': { value: '#DDAA01' },
-    '40': { value: '#B38C00' },
-    '50': { value: '#947100' },
-    '60': { value: '#776017' },
-    '70': { value: '#5C4809' },
-    '80': { value: '#422D19' },
-    '90': { value: '#1C0B00' },
   },
   gold: {
     '1': { value: '#FFFCF4' },
@@ -113,6 +136,22 @@ export const colors = {
     '70': { value: '#5C410A' },
     '80': { value: '#3B2B15' },
     '90': { value: '#1E1100' },
+  },
+  yellow: {
+    '1': { value: '#FFFDF3' },
+    '2': { value: '#FFFBE7' },
+    '3': { value: '#FFF9DA' },
+    '4': { value: '#FFF7CE' },
+    '5': { value: '#FFF5C2' },
+    '10': { value: '#FEE685' },
+    '20': { value: '#FACE00' },
+    '30': { value: '#DDAA01' },
+    '40': { value: '#B38C00' },
+    '50': { value: '#947100' },
+    '60': { value: '#776017' },
+    '70': { value: '#5C4809' },
+    '80': { value: '#422D19' },
+    '90': { value: '#1C0B00' },
   },
   green: {
     '1': { value: '#F8FEF4' },
@@ -153,6 +192,29 @@ export const colors = {
     '80': { value: '#322D26' },
     '90': { value: '#191714' },
   },
+  status: {
+    success: {
+      lighter: { value: 'green.2' },
+      light: { value: 'green.10' },
+      base: { value: 'green.40' },
+      dark: { value: 'green.60' },
+      darker: { value: 'green.70' },
+    },
+    warning: {
+      lighter: { value: 'yellow.2' },
+      light: { value: 'yellow.10' },
+      base: { value: 'yellow.40' },
+      dark: { value: 'yellow.60' },
+      darker: { value: 'yellow.70' },
+    },
+    danger: {
+      lighter: { value: 'red.2' },
+      light: { value: 'red.10' },
+      base: { value: 'red.50' },
+      dark: { value: 'red.60' },
+      darker: { value: 'red.70' },
+    },
+  },
 };
 
 export const fonts = {
@@ -172,7 +234,7 @@ export const fontWeights = {
   black: { value: 900 },
 };
 
-export const sizes = {
+export const numericSizes = {
   '0': { value: '0' },
   '1': { value: '0.0625rem' },
   '2': { value: '0.125rem' },
@@ -198,6 +260,10 @@ export const sizes = {
   '72': { value: '4.5rem' },
   '80': { value: '5rem' },
   '96': { value: '6rem' },
+};
+
+export const sizes = {
+  ...numericSizes,
   full: { value: '100%' },
   min: { value: 'min-content' },
   max: { value: 'max-content' },
@@ -253,140 +319,6 @@ export const lineHeights = {
   },
 };
 
-const baseHeadingStyles = {
-  value: {
-    fontFamily: 'sans',
-    fontWeight: 'black',
-    color: { base: 'gray.90', _dark: 'gray.5' },
-    lineHeight: 'default',
-  },
-};
-
-const baseBodyTextStyles = {
-  value: {
-    fontFamily: 'serif',
-    fontWeight: 'normal',
-    color: { base: 'gray.60', _dark: 'gray.20' },
-    lineHeight: 'default',
-  },
-};
-
-const baseMonoStyles = {
-  value: {
-    fontFamily: 'mono',
-    fontWeight: 'normal',
-    color: { base: 'gray.60', _dark: 'gray.20' },
-    lineHeight: 'default',
-  },
-};
-
-export const textStyles = defineTextStyles({
-  display: {
-    lg: {
-      value: {
-        ...baseHeadingStyles.value,
-        fontSize: '72',
-      },
-    },
-    md: {
-      value: {
-        ...baseHeadingStyles.value,
-        fontSize: '64',
-      },
-    },
-    sm: {
-      value: {
-        ...baseHeadingStyles.value,
-        fontSize: '56',
-      },
-    },
-    xs: {
-      value: {
-        ...baseHeadingStyles.value,
-        fontSize: '48',
-      },
-    },
-  },
-  heading: {
-    lg: {
-      value: {
-        ...baseHeadingStyles.value,
-        fontSize: '40',
-      },
-    },
-    md: {
-      value: {
-        ...baseHeadingStyles.value,
-        fontSize: '32',
-      },
-    },
-    sm: {
-      value: {
-        ...baseHeadingStyles.value,
-        fontSize: '24',
-      },
-    },
-    xs: {
-      value: {
-        ...baseHeadingStyles.value,
-        fontSize: '20',
-      },
-    },
-  },
-  body: {
-    lg: {
-      value: {
-        ...baseBodyTextStyles.value,
-        fontSize: '20',
-      },
-    },
-    md: {
-      value: {
-        ...baseBodyTextStyles.value,
-        fontSize: '16',
-      },
-    },
-    sm: {
-      value: {
-        ...baseBodyTextStyles.value,
-        fontSize: '14',
-      },
-    },
-    xs: {
-      value: {
-        ...baseBodyTextStyles.value,
-        fontSize: '12',
-      },
-    },
-  },
-  mono: {
-    lg: {
-      value: {
-        ...baseMonoStyles.value,
-        fontSize: '20',
-      },
-    },
-    md: {
-      value: {
-        ...baseMonoStyles.value,
-        fontSize: '16',
-      },
-    },
-    sm: {
-      value: {
-        ...baseMonoStyles.value,
-        fontSize: '14',
-      },
-    },
-    xs: {
-      value: {
-        ...baseMonoStyles.value,
-        fontSize: '12',
-      },
-    },
-  },
-});
-
 export const radii = {
   0: { value: '0' },
   1: { value: '0.0625rem' },
@@ -416,18 +348,11 @@ export const shadows = {
   },
 };
 
-export const filters = {
-  invert: { value: 'invert(1)' },
-  none: { value: 'none' },
-};
-
 export const borders = {
   none: {
     value: 'none',
   },
 };
-
-// https://github.com/chakra-ui/panda/tree/4b70f29a14e98d9a0b450273704d2565e3f2d0bd/packages/preset-panda/src
 
 export const aspectRatios = {
   square: {
@@ -596,18 +521,6 @@ export const keyframes = {
   },
 };
 
-export const transitions = {
-  default: {
-    value: 'all 0.3s ease',
-  },
-  fast: {
-    value: 'all 0.1s ease',
-  },
-  slow: {
-    value: 'all 0.5s ease',
-  },
-};
-
 export const breakpoints = {
   xs: '480px',
   sm: '640px',
@@ -616,3 +529,137 @@ export const breakpoints = {
   xl: '1280px',
   '2xl': '1536px',
 };
+
+const baseHeadingStyles = defineStyles({
+  value: {
+    fontFamily: 'sans',
+    fontWeight: 'bold',
+    color: { base: 'gray.90', _dark: 'gray.5' },
+    lineHeight: 'default',
+  },
+});
+
+const baseBodyTextStyles = defineStyles({
+  value: {
+    fontFamily: 'serif',
+    fontWeight: 'normal',
+    color: { base: 'gray.60', _dark: 'gray.20' },
+    lineHeight: 'default',
+  },
+});
+
+const baseMonoStyles = defineStyles({
+  value: {
+    fontFamily: 'mono',
+    fontWeight: 'normal',
+    color: { base: 'gray.60', _dark: 'gray.20' },
+    lineHeight: 'default',
+  },
+});
+
+export const textStyles = defineTextStyles({
+  display: {
+    lg: {
+      value: {
+        ...baseHeadingStyles,
+        fontSize: '72',
+      },
+    },
+    md: {
+      value: {
+        ...baseHeadingStyles,
+        fontSize: '64',
+      },
+    },
+    sm: {
+      value: {
+        ...baseHeadingStyles,
+        fontSize: '56',
+      },
+    },
+    xs: {
+      value: {
+        ...baseHeadingStyles,
+        fontSize: '48',
+      },
+    },
+  },
+  heading: {
+    lg: {
+      value: {
+        ...baseHeadingStyles,
+        fontSize: '40',
+      },
+    },
+    md: {
+      value: {
+        ...baseHeadingStyles,
+        fontSize: '32',
+      },
+    },
+    sm: {
+      value: {
+        ...baseHeadingStyles,
+        fontSize: '24',
+      },
+    },
+    xs: {
+      value: {
+        ...baseHeadingStyles,
+        fontSize: '20',
+      },
+    },
+  },
+  body: {
+    lg: {
+      value: {
+        ...baseBodyTextStyles,
+        fontSize: '20',
+      },
+    },
+    md: {
+      value: {
+        ...baseBodyTextStyles,
+        fontSize: '16',
+      },
+    },
+    sm: {
+      value: {
+        ...baseBodyTextStyles,
+        fontSize: '14',
+      },
+    },
+    xs: {
+      value: {
+        ...baseBodyTextStyles,
+        fontSize: '12',
+      },
+    },
+  },
+  mono: {
+    lg: {
+      value: {
+        ...baseMonoStyles,
+        fontSize: '20',
+      },
+    },
+    md: {
+      value: {
+        ...baseMonoStyles,
+        fontSize: '16',
+      },
+    },
+    sm: {
+      value: {
+        ...baseMonoStyles,
+        fontSize: '14',
+      },
+    },
+    xs: {
+      value: {
+        ...baseMonoStyles,
+        fontSize: '12',
+      },
+    },
+  },
+});

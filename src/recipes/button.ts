@@ -1,9 +1,9 @@
-import { defineRecipe } from '@pandacss/dev';
+import { defineRecipe, defineStyles } from '@pandacss/dev';
 
-const baseButtonStyles = {
+const baseButtonStyles = defineStyles({
   position: 'relative',
   appearance: 'none',
-  minWidth: '0',
+  minWidth: 0,
   transitionDuration: 'fast',
   transitionProperty: 'background, border-color, color, box-shadow',
   transitionTimingFunction: 'default',
@@ -11,19 +11,19 @@ const baseButtonStyles = {
   verticalAlign: 'middle',
   display: 'flex',
   alignItems: 'center',
-  gap: '4',
+  gap: 4,
   fontFamily: 'sans',
-  fontSize: '16',
+  fontSize: 16,
   fontWeight: 'medium',
   lineHeight: 'default',
-  borderWidth: '1',
+  borderWidth: 1,
   borderStyle: 'solid',
   borderColor: 'transparent',
-  borderRadius: '4',
-  outlineWidth: '2',
+  borderRadius: 4,
+  outlineWidth: 2,
   outlineStyle: 'solid',
   outlineColor: 'transparent',
-  outlineOffset: '1',
+  outlineOffset: 1,
   textDecoration: 'none',
   whiteSpace: 'nowrap',
   cursor: 'pointer',
@@ -36,12 +36,10 @@ const baseButtonStyles = {
   },
   '& svg': {
     fill: 'current',
-    width: 24,
-    height: 24,
   },
-};
+});
 
-const buttonVariants = {
+const buttonVariants = defineStyles({
   variant: {
     primary: {
       bg: { base: 'gray.90', _dark: 'gray.5' },
@@ -130,18 +128,18 @@ const buttonVariants = {
       },
     },
     cta: {
-      bg: { base: 'gold.20', _dark: 'gold.30' },
-      color: { base: 'gray.90', _dark: 'gray.90' },
+      bg: { base: 'blue.50', _dark: 'blue.50' },
+      color: { base: 'gray.5', _dark: 'gray.5' },
       _hover: {
-        bg: { base: 'gold.10', _dark: 'gold.20' },
+        bg: { base: 'blue.40', _dark: 'blue.40' },
       },
       _active: {
-        bg: { base: 'gold.30', _dark: 'gold.40' },
+        bg: { base: 'blue.60', _dark: 'blue.60' },
         borderColor: 'transparent',
       },
       _disabled: {
         _hover: {
-          bg: { base: 'gold.20', _dark: 'gold.30' },
+          bg: { base: 'blue.50', _dark: 'blue.50' },
         },
       },
     },
@@ -162,7 +160,7 @@ const buttonVariants = {
       },
     },
   },
-};
+});
 
 export const buttonRecipe = defineRecipe({
   className: 'button',
@@ -172,19 +170,19 @@ export const buttonRecipe = defineRecipe({
     ...buttonVariants,
     size: {
       standard: {
-        fontSize: 16,
-        py: 3,
-        px: 12,
+        fontSize: '16',
+        py: '3',
+        px: '12',
       },
       large: {
-        fontSize: 16,
-        py: 7,
-        px: 14,
+        fontSize: '16',
+        py: '7',
+        px: '14',
       },
       small: {
-        fontSize: 14,
-        py: 1,
-        px: 8,
+        fontSize: '14',
+        py: '1',
+        px: '8',
       },
     },
   },

@@ -3,16 +3,16 @@ import {
   defineTokens,
   defineSemanticTokens,
 } from '@pandacss/dev';
-// import pandaPandaPreset from "@pandacss/preset-panda";
 import * as tokens from './src/styles/tokens';
 import { globalCss } from './src/styles/globalStyle';
 
 import { buttonRecipe, iconButtonRecipe } from './src/recipes/button';
-import { inputRecipe } from './src/recipes/input';
-import { textareaRecipe } from './src/recipes/textarea';
+// import { inputRecipe } from './src/recipes/input';
+// import { textareaRecipe } from './src/recipes/textarea';
 import { textRecipe, headingRecipe, linkRecipe } from './src/recipes/text';
+// import { checkBoxRecipe } from './src/recipes/checkbox';
+import { conditions } from './src/styles/conditions';
 
-// using pandas methods to define type-safe tokens
 const theme = {
   tokens: defineTokens({
     aspectRatios: tokens.aspectRatios,
@@ -31,19 +31,20 @@ const theme = {
     sizes: tokens.sizes,
     spacing: tokens.sizes,
     radii: tokens.radii,
-    // filters: tokens.filters,
     keyframes: tokens.keyframes,
     containerSizes: tokens.containerSizes,
     breakpoints: tokens.breakpoints,
-    // transitions: tokens.transitions,
   }),
   semanticTokens: defineSemanticTokens({
     colors: {
+      success: tokens.colors.status.success,
+      warning: tokens.colors.status.warning,
+      danger: tokens.colors.status.danger,
       utility: {
         shadowColor: {
           value: {
-            base: '{colors.gray.90/10}',
-            _dark: '{colors.gray.100/10}',
+            base: '{colors.slate.90/10}',
+            _dark: '{colors.slate.100/10}',
           },
         },
       },
@@ -56,29 +57,14 @@ export default defineConfig({
   gitignore: true,
   jsxFramework: 'react',
   jsxStyleProps: 'all',
-  jsxFactory: 'panda',
+  jsxFactory: 'styled',
   watch: true,
-  include: ['./src/**/*.{js,jsx,ts,tsx}', './pages/**/*.{js,jsx,ts,tsx}'],
+  include: ['./src/**/*.{js,jsx,ts,tsx}', './public/**/*'],
   preflight: true,
   exclude: [],
   strictTokens: true,
-
-  utilities: {
-    extend: {
-      textTransform: {
-        shorthand: 'textTransform',
-        values: 'type',
-      },
-      letterSpacing: {
-        shorthand: 'tracking',
-        values: 'letterSpacings',
-      },
-      gridColumn: {
-        shorthand: 'gridColumn',
-        values: 'properties',
-      },
-    },
-  },
+  importMap: '@styled-system',
+  outdir: 'styled-system',
 
   theme: {
     containerSizes: tokens.containerSizes,
@@ -100,8 +86,6 @@ export default defineConfig({
       sizes: theme.tokens.sizes,
       spacing: theme.tokens.sizes,
       radii: theme.tokens.radii,
-      // filters: theme.tokens.filters,
-      // transitions: theme.tokens.transitions,
     },
     semanticTokens: {
       colors: theme.semanticTokens.colors,
@@ -115,14 +99,31 @@ export default defineConfig({
         link: linkRecipe,
         button: buttonRecipe,
         iconButton: iconButtonRecipe,
-        input: inputRecipe,
-        textarea: textareaRecipe,
+        // input: inputRecipe,
+        // textarea: textareaRecipe,
+        // checkbox: checkBoxRecipe,
       },
       slotRecipes: {},
     },
   },
 
   patterns: {
+    icon: {
+      properties: {
+        size: {
+          type: 'enum',
+          value: Object.keys(tokens.sizes),
+        },
+      },
+      transform(props) {
+        const { size, ...rest } = props;
+        return {
+          width: size,
+          height: size,
+          ...rest,
+        };
+      },
+    },
     extend: {
       container: {
         transform(props) {
@@ -151,28 +152,18 @@ export default defineConfig({
   },
 
   conditions: {
-    light: '[data-color-mode=light] &',
-    dark: '[data-color-mode=dark] &',
-    checked:
-      '&:is(:checked, [data-checked], [aria-checked=true], [data-state=checked])',
-    indeterminate:
-      '&:is(:indeterminate, [data-indeterminate], [aria-checked=mixed], [data-state=indeterminate])',
-    closed: '&:is([data-state=closed])',
-    open: '&:is([open], [data-state=open])',
+    ...conditions,
+
+    // States
     hidden: '&:is([hidden])',
     current: '&:is([data-current])',
     today: '&:is([data-today])',
-    placeholderShown: '&:is(:placeholder-shown, [data-placeholder-shown])',
     collapsed:
       '&:is([aria-collapsed=true], [data-collapsed], [data-state="collapsed"])',
+
+    // Containers
     containerSmall: '@container (max-width: 560px)',
     containerMedium: '@container (min-width: 561px) and (max-width: 999px)',
     containerLarge: '@container (min-width: 1000px)',
-    selected: '&:is([data-selected])',
   },
-
-  importMap: '@styled-system',
-
-  // The output directory for your css system
-  outdir: 'styled-system',
 });

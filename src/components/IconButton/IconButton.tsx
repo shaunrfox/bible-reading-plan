@@ -7,7 +7,7 @@ import {
 } from '@styled-system/recipes';
 import { ButtonContent } from '~/components/Button/ButtonContent';
 import { Icon, type IconNamesList } from '~/components/Icon';
-import { SizeToken } from '@styled-system/tokens';
+import { type SizeToken } from '@styled-system/tokens';
 
 /**
  * IconButtonProps is generic over an element type E (defaulting to 'button').
@@ -20,6 +20,7 @@ import { SizeToken } from '@styled-system/tokens';
 export type IconButtonProps<E extends React.ElementType = 'button'> =
   BoxProps<E> &
     IconButtonVariantProps & {
+      as?: E;
       href?: string;
       loading?: boolean;
       loadingText?: React.ReactNode;
@@ -71,7 +72,6 @@ export const IconButton = React.forwardRef(
       children ?? (iconName ? <Icon name={iconName} size={iconSize} /> : null);
 
     return (
-      // @ts-ignore
       <Box
         as={asComponent as E}
         ref={ref as React.ForwardedRef<any>}
@@ -79,7 +79,6 @@ export const IconButton = React.forwardRef(
         disabled={trulyDisabled}
         aria-disabled={trulyDisabled}
         className={cx(iconButton({ variant, size }), className)}
-        // Add "type" attribute when rendering a button
         type={asComponent === 'button' ? 'button' : undefined}
         {...props}
       >

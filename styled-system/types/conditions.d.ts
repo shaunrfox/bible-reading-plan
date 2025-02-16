@@ -2,36 +2,6 @@
 import type { AnySelector, Selectors } from './selectors';
 
 export interface Conditions {
-	/** `[data-color-mode=light] &` */
-	"_light": string
-	/** `[data-color-mode=dark] &` */
-	"_dark": string
-	/** `&:is(:checked, [data-checked], [aria-checked=true], [data-state=checked])` */
-	"_checked": string
-	/** `&:is(:indeterminate, [data-indeterminate], [aria-checked=mixed], [data-state=indeterminate])` */
-	"_indeterminate": string
-	/** `&:is([data-state=closed])` */
-	"_closed": string
-	/** `&:is([open], [data-state=open])` */
-	"_open": string
-	/** `&:is([hidden])` */
-	"_hidden": string
-	/** `&:is([data-current])` */
-	"_current": string
-	/** `&:is([data-today])` */
-	"_today": string
-	/** `&:is(:placeholder-shown, [data-placeholder-shown])` */
-	"_placeholderShown": string
-	/** `&:is([aria-collapsed=true], [data-collapsed], [data-state="collapsed"])` */
-	"_collapsed": string
-	/** `@container (max-width: 560px)` */
-	"_containerSmall": string
-	/** `@container (min-width: 561px) and (max-width: 999px)` */
-	"_containerMedium": string
-	/** `@container (min-width: 1000px)` */
-	"_containerLarge": string
-	/** `&:is([data-selected])` */
-	"_selected": string
 	/** `&:is(:hover, [data-hover])` */
 	"_hover": string
 	/** `&:is(:focus, [data-focus])` */
@@ -54,18 +24,14 @@ export interface Conditions {
 	"_readWrite": string
 	/** `&:is(:empty, [data-empty])` */
 	"_empty": string
+	/** `&:is(:checked, [data-checked], [aria-checked=true], [data-state="checked"])` */
+	"_checked": string
 	/** `&:enabled` */
 	"_enabled": string
 	/** `&:is([aria-expanded=true], [data-expanded], [data-state="expanded"])` */
 	"_expanded": string
 	/** `&[data-highlighted]` */
 	"_highlighted": string
-	/** `&[data-complete]` */
-	"_complete": string
-	/** `&[data-incomplete]` */
-	"_incomplete": string
-	/** `&[data-dragging]` */
-	"_dragging": string
 	/** `&::before` */
 	"_before": string
 	/** `&::after` */
@@ -136,6 +102,8 @@ export interface Conditions {
 	"_groupExpanded": string
 	/** `.group:invalid &` */
 	"_groupInvalid": string
+	/** `&:is(:indeterminate, [data-indeterminate], [aria-checked=mixed], [data-state="indeterminate"])` */
+	"_indeterminate": string
 	/** `&:is(:required, [data-required], [aria-required=true])` */
 	"_required": string
 	/** `&:is(:valid, [data-valid])` */
@@ -144,27 +112,27 @@ export interface Conditions {
 	"_invalid": string
 	/** `&:autofill` */
 	"_autofill": string
-	/** `&:is(:in-range, [data-in-range])` */
+	/** `&:in-range` */
 	"_inRange": string
-	/** `&:is(:out-of-range, [data-outside-range])` */
+	/** `&:out-of-range` */
 	"_outOfRange": string
 	/** `&::placeholder, &[data-placeholder]` */
 	"_placeholder": string
+	/** `&:is(:placeholder-shown, [data-placeholder-shown])` */
+	"_placeholderShown": string
 	/** `&:is([aria-pressed=true], [data-pressed])` */
 	"_pressed": string
-	/** `&:is([aria-grabbed=true], [data-grabbed])` */
-	"_grabbed": string
-	/** `&[data-state=under-value]` */
-	"_underValue": string
-	/** `&[data-state=over-value]` */
-	"_overValue": string
-	/** `&[data-state=at-value]` */
-	"_atValue": string
+	/** `&:is([aria-selected=true], [data-selected])` */
+	"_selected": string
 	/** `&:default` */
 	"_default": string
 	/** `&:optional` */
 	"_optional": string
-	/** `&is(:fullscreen, [data-fullscreen])` */
+	/** `&:is([open], [data-open], [data-state="open"])` */
+	"_open": string
+	/** `&:is([closed], [data-closed], [data-state="closed"])` */
+	"_closed": string
+	/** `&:fullscreen` */
 	"_fullscreen": string
 	/** `&:is([data-loading], [aria-busy=true])` */
 	"_loading": string
@@ -172,16 +140,6 @@ export interface Conditions {
 	"_currentPage": string
 	/** `&[aria-current=step]` */
 	"_currentStep": string
-	/** `&[data-unavailable]` */
-	"_unavailable": string
-	/** `&[data-range-start]` */
-	"_rangeStart": string
-	/** `&[data-range-end]` */
-	"_rangeEnd": string
-	/** `&[data-now]` */
-	"_now": string
-	/** `&[data-topmost]` */
-	"_topmost": string
 	/** `@media (prefers-reduced-motion: reduce)` */
 	"_motionReduce": string
 	/** `@media (prefers-reduced-motion: no-preference)` */
@@ -192,6 +150,10 @@ export interface Conditions {
 	"_landscape": string
 	/** `@media (orientation: portrait)` */
 	"_portrait": string
+	/** `.dark &, [data-color-mode=dark] &` */
+	"_dark": string
+	/** `.light &, [data-color-mode=light] &` */
+	"_light": string
 	/** `@media (prefers-color-scheme: dark)` */
 	"_osDark": string
 	/** `@media (prefers-color-scheme: light)` */
@@ -216,10 +178,48 @@ export interface Conditions {
 	"_horizontal": string
 	/** `&[data-orientation=vertical]` */
 	"_vertical": string
-	/** `& :where(svg)` */
-	"_icon": string
 	/** `@starting-style` */
 	"_starting": string
+	/** `&:is([hidden])` */
+	"_hidden": string
+	/** `&:is([data-current])` */
+	"_current": string
+	/** `&:is([data-today])` */
+	"_today": string
+	/** `&:is([aria-collapsed=true], [data-collapsed], [data-state="collapsed"])` */
+	"_collapsed": string
+	/** `@container (max-width: 560px)` */
+	"_containerSmall": string
+	/** `@container (min-width: 561px) and (max-width: 999px)` */
+	"_containerMedium": string
+	/** `@container (min-width: 1000px)` */
+	"_containerLarge": string
+	/** `&[data-complete]` */
+	"_complete": string
+	/** `&[data-incomplete]` */
+	"_incomplete": string
+	/** `&[data-dragging]` */
+	"_dragging": string
+	/** `&:is([aria-grabbed=true], [data-grabbed])` */
+	"_grabbed": string
+	/** `&[data-state=under-value]` */
+	"_underValue": string
+	/** `&[data-state=over-value]` */
+	"_overValue": string
+	/** `&[data-state=at-value]` */
+	"_atValue": string
+	/** `&[data-unavailable]` */
+	"_unavailable": string
+	/** `&[data-range-start]` */
+	"_rangeStart": string
+	/** `&[data-range-end]` */
+	"_rangeEnd": string
+	/** `&[data-now]` */
+	"_now": string
+	/** `&[data-topmost]` */
+	"_topmost": string
+	/** `& :where(svg)` */
+	"_icon": string
 	/** `@media screen and (min-width: 30rem)` */
 	"xs": string
 	/** `@media screen and (min-width: 30rem) and (max-width: 39.9975rem)` */

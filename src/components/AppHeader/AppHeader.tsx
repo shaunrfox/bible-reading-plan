@@ -8,6 +8,7 @@ import {
   pageTitleStyles,
 } from './appHeaderStyles';
 import { ThemeSwitcher } from '../ThemeSwitcher';
+
 interface AppHeaderProps {
   season?: string;
 }
@@ -19,15 +20,13 @@ export function AppHeader({ season }: AppHeaderProps) {
         <Heading as={'h1'} className={pageTitleStyles}>
           Daily Readings
         </Heading>
-        <Box color={'current'}>pizza</Box>
       </a>
-
       <ThemeSwitcher />
       <Box className={pageDateStyles}>
         <Text color={'current'} family={'sans'}>
           {format_(getToday(), 'short')}
         </Text>
-        <Text color={'current'} size={'12'} family={'mono'}>
+        <Text color={'current'} fontSize={'12'} family={'mono'}>
           {season}
         </Text>
       </Box>

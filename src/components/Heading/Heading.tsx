@@ -1,41 +1,32 @@
-import React from 'react';
+import React, { type ElementType } from 'react';
 import { Box, type BoxProps } from '~/components/Box';
+import { splitCssProps } from '@styled-system/jsx';
 import { heading, type HeadingVariantProps } from '@styled-system/recipes';
-import { cx } from '@styled-system/css';
+import { cx, css } from '@styled-system/css';
 
-// A helper to correctly infer the ref type based on the rendered element
-type PolymorphicRef<E extends React.ElementType> =
-  React.ComponentPropsWithRef<E>['ref'];
-
-type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4';
-
-export interface HeadingProps<E extends React.ElementType = 'p'>
-  // @ts-ignore
-  extends BoxProps<E> {
-  variants?: HeadingVariantProps;
-  as?: E | HeadingElement;
+export type HeadingProps = BoxProps & {
+  as?: 'h1' | 'h2' | 'h3' | 'h4';
   className?: string;
-  children?: React.ReactNode;
-}
+  children?: string | React.ReactNode;
+};
 
-export const Heading = React.forwardRef(function Heading<
-  E extends React.ElementType = 'h2',
->(
-  { as, className, children, variants, ...props }: HeadingProps<E>,
-  ref: PolymorphicRef<E>,
-) {
-  const Component = as || 'h2';
+export const Heading: React.FC<HeadingProps> = ({
+  as,
+  children,
+  ...props
+}: HeadingProps) => {
+  const Component = as ?? 'h2';
+  const [cssProps, otherProps] = splitCssProps(props);
+  const { css: cssProp, ...styleProps } = cssProps;
+  const className = css(cssProp, styleProps);
 
   return (
     <Box
       as={Component}
-      ref={ref}
-      className={cx(heading({ ...variants }), className)}
-      {...props}
+      className={cx(heading({ as: Component }), className)}
+      {...otherProps}
     >
       {children}
     </Box>
   );
-}) as <E extends React.ElementType = 'h2'>(
-  props: HeadingProps<E> & { ref?: PolymorphicRef<E> },
-) => JSX.Element;
+};

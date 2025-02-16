@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@styled-system/css';
 import { ThemeProvider } from '~/contexts/ThemeContext';
@@ -214,6 +214,7 @@ function App() {
           className={css({
             display: 'flex',
             justifyContent: 'center',
+            flexWrap: 'wrap',
             gap: '8',
             w: 'full',
             '@container wrapper (width < 500px)': {
@@ -227,6 +228,7 @@ function App() {
               flexDirection: 'column',
               w: 'full',
               maxW: 'sm',
+              minW: 'xs',
               p: '24',
               '@container wrapper (width < 500px)': {
                 maxW: 'full',

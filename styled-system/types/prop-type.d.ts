@@ -189,7 +189,7 @@ export interface UtilityValues {
 	stroke: Tokens["colors"];
 	srOnly: boolean;
 	debug: boolean;
-	colorPalette: "transparent" | "current" | "gray" | "blue" | "mint" | "cyan" | "red" | "orange" | "yellow" | "gold" | "green" | "indigo" | "tan" | "utility";
+	colorPalette: "transparent" | "black" | "white" | "current" | "gray" | "slate" | "blue" | "mint" | "cyan" | "red" | "redOrange" | "orange" | "gold" | "yellow" | "green" | "indigo" | "tan" | "status" | "status.success" | "status.warning" | "status.danger" | "success" | "warning" | "danger" | "utility";
 	textStyle: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl" | "display.lg" | "display.md" | "display.sm" | "display.xs" | "heading.lg" | "heading.md" | "heading.sm" | "heading.xs" | "body.lg" | "body.md" | "body.sm" | "body.xs" | "mono.lg" | "mono.md" | "mono.sm" | "mono.xs";
 }
 

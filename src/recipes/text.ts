@@ -4,24 +4,14 @@ const textBase = {
   margin: '0',
   lineHeight: 'default',
   fontWeight: 'normal',
+  fontSize: '16',
   color: { base: 'gray.70', _dark: 'gray.20' },
 };
 
+// const safeFonts = fonts as Record<string, string>;
+// const safeFontSizes = fontSizes as Record<string, string>;
+
 const textVariants = {
-  fontSize: {
-    '12': { fontSize: '12' },
-    '14': { fontSize: '14' },
-    '16': { fontSize: '16' },
-    '20': { fontSize: '20' },
-    '24': { fontSize: '24' },
-    '32': { fontSize: '32' },
-    '40': { fontSize: '40' },
-    '48': { fontSize: '48' },
-    '64': { fontSize: '64' },
-    '72': { fontSize: '72' },
-    '80': { fontSize: '80' },
-    '96': { fontSize: '96' },
-  },
   family: {
     sans: { fontFamily: 'sans' },
     serif: { fontFamily: 'serif' },
@@ -93,10 +83,9 @@ export const textRecipe = defineRecipe({
   className: 'text',
   jsx: ['Text'],
   base: textBase,
-  variants: { ...textVariants },
+  variants: textVariants,
   defaultVariants: {
-    fontSize: '16',
-    family: 'serif',
+    family: 'sans',
   },
 });
 
@@ -116,7 +105,6 @@ export const linkRecipe = defineRecipe({
   base: linkBase,
   variants: linkVariants,
   defaultVariants: {
-    fontSize: '16',
-    family: 'serif',
+    family: 'sans',
   },
 });
