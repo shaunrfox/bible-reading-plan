@@ -49,9 +49,11 @@ export function DateNav() {
 
   return (
     <Box as="nav" className={dateNavStyles}>
-      <IconButton variant="ghost" as={Link} to={`/${previousDate}`}>
-        <Icon name="arrow-left" />
-      </IconButton>
+      <Link to={`/${previousDate}`}>
+        <IconButton variant="ghost">
+          <Icon name="arrow-left" />
+        </IconButton>
+      </Link>
       <Heading
         as={'h2'}
         className={css({
@@ -67,9 +69,11 @@ export function DateNav() {
       >
         {displayDate}
       </Heading>
-      <IconButton variant="ghost" as={Link} to={`/${nextDate}`}>
-        <Icon name="arrow-right" />
-      </IconButton>
+      <Link to={`/${nextDate}`}>
+        <IconButton variant="ghost">
+          <Icon name="arrow-right" />
+        </IconButton>
+      </Link>
       {currentDate && !areDatesEqual(currentDate, today) && (
         <Link
           to={`/${format_(getToday(), 'path')}`}

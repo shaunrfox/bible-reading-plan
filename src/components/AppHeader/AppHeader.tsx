@@ -19,7 +19,6 @@ export function AppHeader({ season }: AppHeaderProps) {
         <Heading as={'h1'} className={pageTitleStyles}>
           Daily Readings
         </Heading>
-        <Box color={'current'}>pizza</Box>
       </a>
 
       <ThemeSwitcher />
