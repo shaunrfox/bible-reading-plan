@@ -23,7 +23,7 @@ export function AppHeader({ season }: AppHeaderProps) {
 
       <ThemeSwitcher />
       <Box className={pageDateStyles}>
-        <Text color={'current'} family="sans">
+        <Text color={'current'} family={'sans'}>
           {format_(getToday(), 'short')}
         </Text>
         <Text color={'current'} size={'12'} family={'mono'}>

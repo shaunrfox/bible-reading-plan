@@ -1,36 +1,39 @@
-import { Box } from '../Box';
+import { Box, type BoxProps } from '../Box';
 import { link, type LinkVariantProps } from '@styled-system/recipes';
-import { cx, css } from '@styled-system/css';
-import type { SystemStyleObject } from '@styled-system/types';
-import { fontSizes, fonts } from '~/styles/tokens';
+import { type FontSizeToken, type FontToken, type FontWeightToken } from '@styled-system/tokens';
 import { Icon } from '../Icon/Icon';
+import { cx } from '@styled-system/css';
+import { splitProps } from '~/utils/splitProps';
 
-export interface LinkProps extends Omit<SystemStyleObject, keyof LinkVariantProps> {
+export type LinkProps = Omit<BoxProps, keyof LinkVariantProps> & LinkVariantProps & {
   href: string;
   external?: boolean;
   disabled?: boolean;
-  level?: keyof typeof fontSizes;
-  font?: keyof typeof fonts;
+  size?: FontSizeToken;
+  family?: FontToken;
   italic?: boolean;
   bold?: boolean;
+  weight?: FontWeightToken;
   className?: string;
   children?: React.ReactNode;
-}
+};
 
-export function Link({
-  href,
-  external,
-  disabled,
-  children,
-  level,
-  font,
-  italic,
-  bold,
-  className,
-  ...props
-}: LinkProps) {
-  const styleProps: SystemStyleObject = { ...props };
+export const Link: React.FC<LinkProps> = (
+  {
+    href,
+    external,
+    disabled,
+    children,
+    size,
+    family,
+    weight,
+    italic,
+    bold,
+    ...props
+  }: LinkProps,
+) => {
 
+  const [ className, otherProps ] = splitProps(props);
   return (
     <Box
       as="a"
@@ -39,13 +42,13 @@ export function Link({
       rel={external ? 'noopener noreferrer' : undefined}
       aria-disabled={disabled}
       className={cx(
-        link({ font, italic, bold, level }),
-        css(styleProps),
-        className,
+        link({ family, italic, bold, size, weight }),
+        className as string,
       )}
+      {...otherProps}
     >
       {children}
-      {external && <Icon name="arrow-square-out" size={20} />}
+      {external && <Icon name="arrow-square-out" size={'20'} />}
     </Box>
   );
-}
+};

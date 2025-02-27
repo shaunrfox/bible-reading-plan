@@ -843,6 +843,10 @@ const tokens = {
     "value": "1.25rem",
     "variable": "var(--sizes-20)"
   },
+  "sizes.22": {
+    "value": "1.375rem",
+    "variable": "var(--sizes-22)"
+  },
   "sizes.24": {
     "value": "1.5rem",
     "variable": "var(--sizes-24)"
@@ -1031,6 +1035,10 @@ const tokens = {
     "value": "1.25rem",
     "variable": "var(--spacing-20)"
   },
+  "spacing.22": {
+    "value": "1.375rem",
+    "variable": "var(--spacing-22)"
+  },
   "spacing.24": {
     "value": "1.5rem",
     "variable": "var(--spacing-24)"
@@ -1163,18 +1171,6 @@ const tokens = {
     "value": "100%",
     "variable": "var(--radii-100)"
   },
-  "transitions.default": {
-    "value": "all 0.3s ease",
-    "variable": "var(--transitions-default)"
-  },
-  "transitions.fast": {
-    "value": "all 0.1s ease",
-    "variable": "var(--transitions-fast)"
-  },
-  "transitions.slow": {
-    "value": "all 0.5s ease",
-    "variable": "var(--transitions-slow)"
-  },
   "breakpoints.xs": {
     "value": "480px",
     "variable": "var(--breakpoints-xs)"
@@ -1262,6 +1258,10 @@ const tokens = {
   "spacing.-20": {
     "value": "calc(var(--spacing-20) * -1)",
     "variable": "var(--spacing-20)"
+  },
+  "spacing.-22": {
+    "value": "calc(var(--spacing-22) * -1)",
+    "variable": "var(--spacing-22)"
   },
   "spacing.-24": {
     "value": "calc(var(--spacing-24) * -1)",

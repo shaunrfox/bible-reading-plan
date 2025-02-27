@@ -172,7 +172,7 @@ export const fontWeights = {
   black: { value: 900 },
 };
 
-export const sizes = {
+export const numericSizes = {
   '0': { value: '0' },
   '1': { value: '0.0625rem' },
   '2': { value: '0.125rem' },
@@ -188,6 +188,7 @@ export const sizes = {
   '14': { value: '0.875rem' },
   '16': { value: '1rem' },
   '20': { value: '1.25rem' },
+  '22': { value: '1.375rem' },
   '24': { value: '1.5rem' },
   '32': { value: '2rem' },
   '40': { value: '2.5rem' },
@@ -197,6 +198,10 @@ export const sizes = {
   '72': { value: '4.5rem' },
   '80': { value: '5rem' },
   '96': { value: '6rem' },
+};
+
+export const sizes = {
+  ...numericSizes,
   full: { value: '100%' },
   min: { value: 'min-content' },
   max: { value: 'max-content' },

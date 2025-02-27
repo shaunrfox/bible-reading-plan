@@ -13,7 +13,7 @@ export const themeSwitchStyles = css({
   lineHeight: 'none',
   width: '14',
   height: '14',
-  transition: 'default',
+  transition: 'all',
   '&:before': {
     content: '""',
     position: 'absolute',
@@ -22,7 +22,9 @@ export const themeSwitchStyles = css({
     display: 'block',
     borderRadius: '100',
     backgroundColor: { base: 'gray.98', _dark: 'gray.5' },
-    transition: 'inset 0.3s ease',
+    transition: 'all',
+    transitionTimingFunction: 'default',
+    transitionDuration: 'slow',
   },
   _hover: {
     cursor: 'pointer',

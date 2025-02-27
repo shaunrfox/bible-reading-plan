@@ -1,3 +1,4 @@
+export * from './icon.mjs';
 export * from './box.mjs';
 export * from './flex.mjs';
 export * from './stack.mjs';

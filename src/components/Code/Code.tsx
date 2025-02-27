@@ -1,26 +1,35 @@
-import { type PropsWithChildren } from 'react';
-import { Box, type BoxProps } from '@styled-system/jsx';
-// import { CopyToClipboardButton } from './copy-to-clipboard-button';
+import { Box, type BoxProps } from '~/components/Box';
+import { Text, type TextProps } from '~/components/Text';
+import { code, type CodeVariantProps } from '@styled-system/recipes';
+import { cx } from '@styled-system/css';
+import { splitProps } from '~/utils/splitProps';
 
-interface Props extends BoxProps {
-  children: React.ReactNode;
+export type CodeProps = Omit<BoxProps, keyof CodeVariantProps | keyof TextProps> & CodeVariantProps & TextProps & {
+  children?: string | React.ReactNode;
   lang?: string;
-}
+};
 
-export const Code = (props: PropsWithChildren<Props>) => {
-  const { children, lang, ...rest } = props;
+export const Code: React.FC<CodeProps> = (
+  {
+    lang, 
+    children, 
+    ...props 
+  }: CodeProps,
+) => {
+  const [className, otherProps] = splitProps(props);
   return (
-    <Box bg="gray.80" position="relative" lang={lang} {...rest}>
-      <Box
-        overflow="auto"
-        p="4"
-        whiteSpace="pre"
-        fontSize="14"
-        lineHeight="20"
-        fontFamily="mono"
-      >
+    <Box
+      as="code"
+      className={cx(
+        code({}),
+        className as string,
+      )}
+      lang={lang}
+      {...otherProps}
+    >
+      <Text>
         {children}
-      </Box>
+      </Text>
     </Box>
-  );
+  )
 };

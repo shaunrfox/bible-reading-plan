@@ -1,9 +1,5 @@
-import { promises as fs } from 'fs';
-import path from 'path';
-
 /**
- * Type definitions (optional) to describe your data shape.
- * You can refine these as needed based on your JSON structure.
+ * Type definitions to describe the data shape.
  */
 export interface ReadingData {
   services: {

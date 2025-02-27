@@ -1,27 +1,44 @@
-import { cx } from '@styled-system/css';
-import { iconStyle } from './iconStyle';
-import { IconNamesList } from './icons';
-import { type HTMLStyledProps } from '@styled-system/types';
-import { Box } from '../Box/Box';
+import React, { type SVGAttributes } from 'react';
+import { Box, type BoxProps } from '~/components/Box';
+import { splitCssProps } from '@styled-system/jsx';
+import { cx, css } from '@styled-system/css';
+// import { type ColorToken } from '@styled-system/tokens';
+import type { IconNamesList } from './icons';
+import { icon } from '@styled-system/patterns';
+import { numericSizes } from '~/styles/tokens';
 
-type IconProps = HTMLStyledProps<'svg'> & {
-  name: IconNamesList;
-  className?: string;
-  size?: number;
-};
+/*
+ * Using the size prop in this way cannot handle non-numeric sizes,
+ * so importing this list of keys directly from the tokens to ensure
+ * that only valid sizes are allowed.
+ */
+export type AllowedIconSizes = keyof typeof numericSizes;
 
-export function Icon({ name, className, size = 24, ...props }: IconProps) {
+export type IconProps = Omit<BoxProps, 'size'> &
+  SVGAttributes<SVGElement> & {
+    name: IconNamesList;
+    size?: AllowedIconSizes;
+    fill?: string;
+  };
+export const Icon: React.FC<IconProps> = ({
+  name,
+  size = '24',
+  fill = 'current',
+  ...props
+}: IconProps) => {
+  const [cssProps, otherProps] = splitCssProps(props);
+  const { css: cssProp, ...styleProps } = cssProps;
+  const className = css(cssProp, styleProps);
+
   return (
     <Box
-      as="svg"
+      as={'svg'}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size}
-      className={cx(iconStyle(), className)}
-      {...props}
+      className={cx(icon({ size: size as AllowedIconSizes, fill }), className)}
+      {...otherProps}
     >
       <use xlinkHref={`/sprite.svg#${name}`} />
     </Box>
   );
-}
+};

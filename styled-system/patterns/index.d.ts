@@ -1,4 +1,5 @@
 /* eslint-disable */
+export * from './icon';
 export * from './box';
 export * from './flex';
 export * from './stack';

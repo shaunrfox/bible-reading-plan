@@ -1,12 +1,24 @@
+import { Box, type BoxProps } from '../Box/Box';
+import { spinner, type SpinnerVariantProps } from '@styled-system/recipes';
 import { cx } from '@styled-system/css';
-import { Box } from '../Box/Box';
-import { spinnerStyle } from './spinnerStyles';
-import { type HTMLStyledProps } from '@styled-system/types';
+import { splitProps } from '~/utils/splitProps';
 
-type SpinnerProps = HTMLStyledProps<'div'> & {
-  size?: 'standard' | 'small' | 'large';
-};
+export type SpinnerProps = Omit<BoxProps, keyof SpinnerVariantProps> &
+  SpinnerVariantProps & {
+    size?: 'standard' | 'small' | 'large';
+    className?: string;
+  };
 
-export const Spinner = ({ size = 'standard', className, ...props }: SpinnerProps) => {
-  return <Box className={cx(spinnerStyle({ size }), className)} {...props} />;
+export const Spinner: React.FC<SpinnerProps> = ({
+  size,
+  ...props
+}: SpinnerProps) => {
+  const [className, otherProps] = splitProps(props);
+  return (
+    <Box
+      as="div"
+      className={cx(spinner({ size }), className as string)}
+      {...otherProps}
+    />
+  );
 };

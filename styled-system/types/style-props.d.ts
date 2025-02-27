@@ -6797,20 +6797,6 @@ minH?: ConditionalValue<WithEscapeHatch<UtilityValues["minHeight"] | CssVars>>
    * @see https://developer.mozilla.org/docs/Web/CSS/max-height
    */
 maxH?: ConditionalValue<WithEscapeHatch<UtilityValues["maxHeight"] | CssVars>>
- /**
-   * The **`letter-spacing`** CSS property sets the horizontal spacing behavior between text characters. This value is added to the natural spacing between characters while rendering the text. Positive values of `letter-spacing` causes characters to spread farther apart, while negative values of `letter-spacing` bring characters closer together.
-   *
-   * **Syntax**: `normal | <length>`
-   *
-   * **Initial value**: `normal`
-   *
-   * | Chrome | Firefox | Safari |  Edge  |  IE   |
-   * | :----: | :-----: | :----: | :----: | :---: |
-   * | **1**  |  **1**  | **1**  | **12** | **4** |
-   *
-   * @see https://developer.mozilla.org/docs/Web/CSS/letter-spacing
-   */
-tracking?: ConditionalValue<WithEscapeHatch<UtilityValues["letterSpacing"] | CssVars>>
  textShadowColor?: ConditionalValue<WithEscapeHatch<UtilityValues["textShadowColor"] | CssVars>>
  /**
    * The **`background-position`** CSS property sets the initial position for each background image. The position is relative to the position layer set by `background-origin`.

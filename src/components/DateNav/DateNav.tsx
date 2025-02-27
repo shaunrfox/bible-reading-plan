@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Box } from '~/components/Box';
 import { Heading } from '~/components/Heading';
 import { IconButton } from '~/components/IconButton';
-import { Icon } from '../Icon';
+import { Icon } from '~/components/Icon';
 import { css } from '@styled-system/css';
 import {
   format_,
@@ -14,10 +14,6 @@ import {
   getNextDate,
 } from '~/utils/dateHelpers';
 import { dateNavStyles } from './dateNavStyles';
-
-// type DateNavProps = {
-//   date: string; // ISO date string
-// };
 
 export function DateNav() {
   const [currentDate, setCurrentDate] = useState<Date | null>(null);
@@ -49,12 +45,6 @@ export function DateNav() {
     displayDate = format_(currentDate, 'short');
     previousDate = format_(getPreviousDate(currentDate), 'path');
     nextDate = format_(getNextDate(currentDate), 'path');
-    // console.log("DateNav render:", {
-    //   currentDate,
-    //   displayDate,
-    //   previousDate,
-    //   nextDate,
-    // });
   }
 
   return (
@@ -73,13 +63,6 @@ export function DateNav() {
           letterSpacing: 'widest',
           width: 'fit',
           '@container wrapper (width < 500px)': {
-            // order: '1',
-            // gridColumn: '1 / -1',
-            // gridRow: '1',
-            // fontFamily: 'serif',
-            // textTransform: 'none',
-            // letterSpacing: 'normal',
-            // fontWeight: 'normal',
             fontSize: '14',
           },
         })}
@@ -115,7 +98,7 @@ export function DateNav() {
             },
           })}
         >
-          <Icon name="arrow-counter-clockwise" size={16} />
+          <Icon name="arrow-counter-clockwise" size={'16'} />
           Today
         </Link>
       )}

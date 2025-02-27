@@ -1,94 +1,75 @@
 import * as React from 'react';
 import { cx } from '@styled-system/css';
-import { Box, BoxProps } from '../Box';
+import { Box, type BoxProps } from '~/components/Box';
 import { button, type ButtonVariantProps } from '@styled-system/recipes';
-import { Spinner } from '~/components/Spinner';
-import { css } from '@styled-system/css';
-import type { SystemStyleObject } from '@styled-system/types';
+import { ButtonContent } from './ButtonContent';
 
-// The key is to use Panda's SystemStyleObject type while preserving the button's native props.
-// We're letting the Box component handle the native HTML props through its BoxProps type.
-// So we're passing props directly to both css() and the spread operator.
-// This works because:
-// The BoxProps type already includes all valid HTML attributes for the button/anchor element
-// Panda's css() function will only use the valid style properties from the props object
-// Any remaining props (like onClick) will be properly handled by the spread operator
+/**
+ * ButtonProps is now generic.
+ * It extends BoxProps for the element type E (default "button") and ButtonVariantProps.
+ * This means that any prop accepted by the underlying element (e.g. onClick) is automatically allowed.
+ */
+export type ButtonProps<E extends React.ElementType = 'button'> = BoxProps<E> &
+  ButtonVariantProps & {
+    href?: string;
+    loading?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+    disabled?: boolean;
+  };
 
-export interface ButtonProps
-  extends BoxProps<'button'>,
-    Omit<SystemStyleObject, keyof ButtonVariantProps> {
-  variant?: 'primary' | 'standard' | 'hollow' | 'ghost' | 'cta' | 'danger';
-  size?: 'standard' | 'small' | 'large';
-  href?: string;
-  className?: string;
-  children?: React.ReactNode;
-  disabled?: boolean;
-  loading?: boolean;
-}
+/**
+ * Define a polymorphic ButtonComponent type.
+ * The ref type will be inferred from the element type E.
+ */
+type ButtonComponent = <E extends React.ElementType = 'button'>(
+  props: ButtonProps<E> & { ref?: React.ForwardedRef<Element> },
+) => JSX.Element;
 
-const ButtonContent = ({
-  loading,
-  children,
-}: {
-  loading: boolean;
-  children: React.ReactNode;
-}) => {
-  return (
-    <>
-      <Box
-        className={css({
-          display: 'flex',
-          alignItems: 'center',
-          gap: '2',
-          opacity: loading ? 0 : 1,
-        })}
-      >
-        {children}
-      </Box>
-      {loading && (
-        <Box
-          className={css({
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            right: '0',
-            bottom: '0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          })}
-        >
-          <Spinner />
-        </Box>
-      )}
-    </>
-  );
-};
-
-export const Button = React.forwardRef<
-  HTMLButtonElement | HTMLAnchorElement,
-  ButtonProps
->(
-  (
-    { variant, size, href, className, children, loading, disabled, ...props },
-    ref,
+/**
+ * The Button component uses the polymorphic Box as its base.
+ * It automatically renders as an <a> if href is provided.
+ * Since ButtonProps extends BoxProps, any extra props (like onClick) are automatically allowed.
+ */
+export const Button = React.forwardRef(
+  <E extends React.ElementType = 'button'>(
+    {
+      variant,
+      size,
+      href,
+      className,
+      children,
+      loading,
+      disabled,
+      ...props
+    }: ButtonProps<E>,
+    ref: React.ForwardedRef<Element>,
   ) => {
     const trulyDisabled = loading || disabled;
-    const Component = href ? 'a' : 'button';
+    // Decide which element to render based on whether href is provided.
+    const asComponent = href ? 'a' : 'button';
 
     return (
+      // @ts-ignore
       <Box
-        ref={ref as React.Ref<HTMLButtonElement | HTMLAnchorElement>}
-        as={Component}
+        as={asComponent as E}
+        ref={ref as React.ForwardedRef<any>}
         href={href}
         disabled={trulyDisabled}
         aria-disabled={trulyDisabled}
-        className={cx(button({ variant, size }), css(props), className)}
-        type={Component === 'button' ? 'button' : undefined}
+        // Merge the classes from:
+        // 1. The button recipe (for variant and size)
+        // 2. The result of css(props) (for any extra style props)
+        // 3. Any extra className passed in
+        className={cx(button({ variant, size }), className)}
+        // Add "type" attribute when rendering a button
+        type={asComponent === 'button' ? 'button' : undefined}
         {...props}
       >
-        <ButtonContent loading={loading || false}>{children}</ButtonContent>
+        <>
+          <ButtonContent loading={!!loading}>{children}</ButtonContent>
+        </>
       </Box>
     );
   },
-);
+) as ButtonComponent;

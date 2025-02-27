@@ -1,27 +1,29 @@
 import { defineRecipe } from '@pandacss/dev';
+import { fontSizes, fontWeights } from '~/styles/tokens';
 
 const textBase = {
   margin: '0',
   lineHeight: 'default',
   fontWeight: 'normal',
+  fontSize: '16',
   color: { base: 'gray.70', _dark: 'gray.20' },
 };
 
 const textVariants = {
-  size: {
-    '12': { fontSize: '12' },
-    '14': { fontSize: '14' },
-    '16': { fontSize: '16' },
-    '20': { fontSize: '20' },
-    '24': { fontSize: '24' },
-    '32': { fontSize: '32' },
-    '40': { fontSize: '40' },
-    '48': { fontSize: '48' },
-    '64': { fontSize: '64' },
-    '72': { fontSize: '72' },
-    '80': { fontSize: '80' },
-    '96': { fontSize: '96' },
-  },
+  // fontSize: {
+  //   '12': { fontSize: '12' },
+  //   '14': { fontSize: '14' },
+  //   '16': { fontSize: '16' },
+  //   '20': { fontSize: '20' },
+  //   '24': { fontSize: '24' },
+  //   '32': { fontSize: '32' },
+  //   '40': { fontSize: '40' },
+  //   '48': { fontSize: '48' },
+  //   '64': { fontSize: '64' },
+  //   '72': { fontSize: '72' },
+  //   '80': { fontSize: '80' },
+  //   '96': { fontSize: '96' },
+  // },
   family: {
     sans: { fontFamily: 'sans' },
     serif: { fontFamily: 'serif' },
@@ -42,16 +44,23 @@ const textVariants = {
       textDecoration: 'underline',
     },
   },
+  size: {
+    ...fontSizes,
+  },
+  weight: {
+    ...fontWeights,
+  },
 };
 
 const headingBase = {
-  fontFamily: 'sans',
-  fontWeight: 'bold',
-  color: { base: 'gray.90', _dark: 'gray.5' },
+  fontFamily: 'heading',
+  fontWeight: 'black',
+  color: { base: 'slate.90', _dark: 'slate.5' },
+  lineHeight: 'default',
 };
 
 const headingVariants = {
-  as: {
+  level: {
     h1: { textStyle: 'heading.lg' },
     h2: { textStyle: 'heading.md' },
     h3: { textStyle: 'heading.sm' },
@@ -89,14 +98,32 @@ const linkVariants = {
   },
 };
 
+const labelBase = {
+  fontSize: '14',
+  fontWeight: 'normal',
+  lineHeight: 'normal',
+  cursor: 'default',
+};
+
+//Copied linkvarients, don't have styles defined for this yet
+const labelVariants = {
+  ...textVariants,
+  _disabled: {
+    true: {
+      cursor: 'not-allowed',
+      opacity: 0.7,
+      pointerEvents: 'none',
+    },
+  },
+};
+
 export const textRecipe = defineRecipe({
   className: 'text',
   jsx: ['Text'],
   base: textBase,
-  variants: { ...textVariants },
+  variants: textVariants,
   defaultVariants: {
-    size: '16',
-    family: 'serif',
+    family: 'sans',
   },
 });
 
@@ -106,7 +133,7 @@ export const headingRecipe = defineRecipe({
   base: headingBase,
   variants: headingVariants,
   defaultVariants: {
-    as: 'h2',
+    level: 'h2',
   },
 });
 
@@ -116,7 +143,16 @@ export const linkRecipe = defineRecipe({
   base: linkBase,
   variants: linkVariants,
   defaultVariants: {
-    size: '16',
-    family: 'serif',
+    family: 'sans',
+  },
+});
+
+export const labelRecipe = defineRecipe({
+  className: 'label',
+  jsx: ['Label'],
+  base: labelBase,
+  variants: labelVariants,
+  defaultVariants: {
+    family: 'sans',
   },
 });

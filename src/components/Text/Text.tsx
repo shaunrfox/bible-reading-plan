@@ -1,64 +1,50 @@
-import React from 'react';
-import { Box, BoxProps } from '../Box';
+import React, { type ElementType } from 'react';
+import { Box, type BoxProps } from '~/components/Box';
+import type {
+  FontToken,
+  FontSizeToken,
+  FontWeightToken,
+} from '@styled-system/tokens';
 import { text, type TextVariantProps } from '@styled-system/recipes';
-import { cx, css } from '@styled-system/css';
-import type { SystemStyleObject } from '@styled-system/types';
-import { fontSizes, fonts } from '~/styles/tokens';
+import { cx } from '@styled-system/css';
+import { splitProps } from '~/utils/splitProps';
 
-export interface TextProps
-  extends Omit<
-      BoxProps<'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4'>,
-      keyof SystemStyleObject
-    >,
-    SystemStyleObject {
-  variants?: TextVariantProps;
-  as?: 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4';
-  size?: keyof typeof fontSizes;
-  family?: keyof typeof fonts;
-  italic?: boolean;
-  bold?: boolean;
-  underline?: boolean;
-  className?: string;
-}
+export type TextProps = Omit<BoxProps, keyof TextVariantProps> &
+  TextVariantProps & {
+    italic?: boolean;
+    family?: FontToken;
+    bold?: boolean;
+    underline?: boolean;
+    size?: FontSizeToken;
+    weight?: FontWeightToken;
+    children?: string | React.ReactNode;
+    as?: ElementType;
+    className?: string;
+  };
 
-export const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
-  (
-    {
-      as = 'p',
-      size,
-      family,
-      italic,
-      bold,
-      underline,
-      className,
-      children,
-      variants,
-      ...restProps
-    },
-    ref,
-  ) => {
-    // Extract non-style props that shouldn't be passed to css()
-    const { onClick, onMouseEnter, onMouseLeave, ...styleProps } = restProps;
+export const Text: React.FC<TextProps> = ({
+  as = 'p',
+  italic,
+  family,
+  bold,
+  underline,
+  size,
+  weight,
+  children,
+  ...props
+}: TextProps) => {
+  const [className, otherProps] = splitProps(props);
 
-    const elementProps = {
-      onClick,
-      onMouseEnter,
-      onMouseLeave,
-    };
-
-    return (
-      <Box
-        as={as}
-        ref={ref}
-        className={cx(
-          text({ size, family, italic, bold, underline, ...variants }),
-          css(styleProps),
-          className,
-        )}
-        {...elementProps}
-      >
-        {children}
-      </Box>
-    );
-  },
-);
+  return (
+    <Box
+      as={as}
+      className={cx(
+        text({ family, bold, underline, italic, size, weight }),
+        className as string,
+      )}
+      {...otherProps}
+    >
+      {children}
+    </Box>
+  );
+};
