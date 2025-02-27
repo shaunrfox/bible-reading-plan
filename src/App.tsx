@@ -13,6 +13,9 @@ import { getDailyReading, type ReadingData } from '~/utils/api_local';
 import { Divider, VStack } from '@styled-system/jsx';
 import { formatReference } from '~/utils/formatReference';
 
+// Add this constant
+const basename = import.meta.env.DEV ? '' : '/bible-reading-plan';
+
 function ReadingItem({
   label,
   reference,
@@ -98,30 +101,42 @@ function App() {
 
   // Handle initial redirect to today's date
   useEffect(() => {
-    const hash = window.location.hash;
-    // If we have a hash route (/#/something), don't redirect
-    if (hash && hash.length > 2) {
+    console.log('Current hash:', window.location.hash);
+    console.log('Current pathname:', window.location.pathname);
+
+    // Get the hash without the # character
+    const hash = window.location.hash.replace('#', '');
+
+    // If we have a path after the hash (like /#/2023-01-01), don't redirect
+    if (hash && hash.length > 1) {
       return;
     }
 
-    // Get the path without the hash
-    const path = hash.replace('#', '');
-    const cleanPath = path.replace(/^\/+|\/+$/g, '');
-
-    // Only redirect if we're at the root (no additional path segments)
-    if (!cleanPath) {
-      const today = format_(getToday(), 'path');
-      navigate(`/${today}`, { replace: true });
-    }
+    // If we're at the root or just /#, redirect to today's date
+    const today = format_(getToday(), 'path');
+    navigate(`${basename}/${today}`, { replace: true });
   }, [navigate]);
 
   // Fetch data effect
   useEffect(() => {
+    console.log('Location changed. Current hash:', window.location.hash);
+    console.log(
+      'Location changed. Current pathname:',
+      window.location.pathname,
+    );
+
     try {
-      // Get date from hash-based URL
+      // Get date from hash-based URL, removing the leading slash if present
       const hash = window.location.hash;
-      const path = hash.replace('#/', '');
+      const path = hash.replace('#/', '').replace(/^\/+/, '');
       const urlDate = path || '';
+
+      if (!urlDate) {
+        // Add this fallback for when no date is in the URL
+        const today = format_(getToday(), 'path');
+        navigate(`/${today}`, { replace: true });
+        return;
+      }
 
       if (urlDate) {
         const date = createDate(urlDate);
@@ -146,6 +161,9 @@ function App() {
       }
     } catch (err) {
       setError('Invalid date');
+      // You could also add a fallback here for invalid dates
+      const today = format_(getToday(), 'path');
+      navigate(`/${today}`, { replace: true });
     }
   }, [location]);
 

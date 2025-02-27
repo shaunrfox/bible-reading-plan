@@ -15,7 +15,7 @@ interface AppHeaderProps {
 export function AppHeader({ season }: AppHeaderProps) {
   return (
     <header className={pageHeaderStyles}>
-      <a href={`/`}>
+      <a href={`#/`}>
         <Heading as={'h1'} className={pageTitleStyles}>
           Daily Readings
         </Heading>

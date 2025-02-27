@@ -1,24 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <title>Redirecting...</title>
     <script>
       // Since we know we're in the bible-reading-plan repo
-      const basename = "/bible-reading-plan";
+      const basename = '/bible-reading-plan';
 
       // Get the path after the basename
       const fullPath = window.location.pathname;
-      const pathAfterBase = fullPath.replace(basename, "");
+      const pathAfterBase = fullPath.replace(basename, '');
 
       // Remove leading and trailing slashes
-      const cleanPath = pathAfterBase.replace(/^\/+|\/+$/g, "");
+      const cleanPath = pathAfterBase.replace(/^\/+|\/+$/g, '');
 
-      // Redirect to the index page with the correct path
-      window.location.href = `${basename}/#/${cleanPath}`;
+      // If there's a path, redirect to the hash route with that path
+      // Otherwise, just go to the root which will handle redirecting to today
+      const redirectPath = cleanPath
+        ? `${basename}/#/${cleanPath}`
+        : `${basename}/`;
+
+      window.location.href = redirectPath;
     </script>
   </head>
   <body>
-    Redirecting...
+    <h1>404</h1>
+    <p>Redirecting...</p>
   </body>
 </html>
