@@ -7,7 +7,7 @@ import {
 } from '@styled-system/recipes';
 import { ButtonContent } from '~/components/Button/ButtonContent';
 import { Icon, type IconNamesList } from '~/components/Icon';
-import { SizeToken } from '@styled-system/tokens';
+import { type SizeToken } from '@styled-system/tokens';
 
 /**
  * IconButtonProps is generic over an element type E (defaulting to 'button').

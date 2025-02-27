@@ -1,74 +1,50 @@
-import React from 'react';
+import React, { type ElementType } from 'react';
 import { Box, type BoxProps } from '~/components/Box';
+import type {
+  FontToken,
+  FontSizeToken,
+  FontWeightToken,
+} from '@styled-system/tokens';
 import { text, type TextVariantProps } from '@styled-system/recipes';
 import { cx } from '@styled-system/css';
-// import type { FontSizeToken, FontToken } from '@styled-system/tokens';
-import type { JsxStyleProps } from '@styled-system/types';
+import { splitProps } from '~/utils/splitProps';
 
-// A helper to correctly infer the ref type based on the rendered element
-type PolymorphicRef<E extends React.ElementType> =
-  React.ComponentPropsWithRef<E>['ref'];
+export type TextProps = Omit<BoxProps, keyof TextVariantProps> &
+  TextVariantProps & {
+    italic?: boolean;
+    family?: FontToken;
+    bold?: boolean;
+    underline?: boolean;
+    size?: FontSizeToken;
+    weight?: FontWeightToken;
+    children?: string | React.ReactNode;
+    as?: ElementType;
+    className?: string;
+  };
 
-/**
- * TextProps is now generic. It extends BoxProps for the element type E
- * (defaulting to 'p') and includes our additional props (variants, size, etc.).
- * Since BoxProps<E> internally uses React.ComponentPropsWithoutRef<E>,
- * any intrinsic event handlers (e.g. onClick) are automatically included.
- */
-export interface TextProps<E extends React.ElementType = 'p'>
-  // @ts-ignore
-  extends BoxProps<E> {
-  variants?: TextVariantProps;
-  as?: E;
-  fontSize?: JsxStyleProps;
-  family?: JsxStyleProps | string;
-  italic?: boolean;
-  bold?: boolean;
-  underline?: boolean;
-  className?: string;
-  children?: React.ReactNode;
-}
-
-/**
- * The Text component is built on top of Box.
- * It forwards all props (including event handlers and style props) directly to Box,
- * and combines our text recipe classes with any custom className.
- */
-export const Text = React.forwardRef(function Text<
-  E extends React.ElementType = 'p',
->(
-  {
-    as,
-    fontSize,
-    family,
-    italic,
-    bold,
-    underline,
-    className,
-    children,
-    variants,
-    ...props
-  }: TextProps<E>,
-  ref: PolymorphicRef<E>,
-) {
-  // Default to a paragraph if no "as" is provided.
-  const Component = as || 'p';
+export const Text: React.FC<TextProps> = ({
+  as = 'p',
+  italic,
+  family,
+  bold,
+  underline,
+  size,
+  weight,
+  children,
+  ...props
+}: TextProps) => {
+  const [className, otherProps] = splitProps(props);
 
   return (
     <Box
-      as={Component}
-      ref={ref}
+      as={as}
       className={cx(
-        // Generate recipe-based classes using your text recipe
-        text({ fontSize, family, italic, bold, underline, ...variants }),
-        // Merge with any additional className passed in
-        className,
+        text({ family, bold, underline, italic, size, weight }),
+        className as string,
       )}
-      {...props}
+      {...otherProps}
     >
       {children}
     </Box>
   );
-}) as <E extends React.ElementType = 'p'>(
-  props: TextProps<E> & { ref?: PolymorphicRef<E> },
-) => JSX.Element;
+};
