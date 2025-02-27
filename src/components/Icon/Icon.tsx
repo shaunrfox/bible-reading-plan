@@ -6,6 +6,7 @@ import { cx, css } from '@styled-system/css';
 import type { IconNamesList } from './icons';
 import { icon } from '@styled-system/patterns';
 import { numericSizes } from '~/styles/tokens';
+import { getPublicPath } from '~/utils/assetPaths';
 
 /*
  * Using the size prop in this way cannot handle non-numeric sizes,
@@ -38,7 +39,7 @@ export const Icon: React.FC<IconProps> = ({
       className={cx(icon({ size: size as AllowedIconSizes, fill }), className)}
       {...otherProps}
     >
-      <use xlinkHref={`/sprite.svg#${name}`} />
+      <use xlinkHref={getPublicPath(`sprite.svg#${name}`)} />
     </Box>
   );
 };

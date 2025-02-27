@@ -1,3 +1,5 @@
+import { getDataPath } from './assetPaths';
+
 /**
  * Type definitions to describe the data shape.
  */
@@ -25,30 +27,20 @@ export interface ReadingData {
  * @returns The parsed data or throws an error if not found/invalid.
  */
 export async function getDailyReading(date: string): Promise<ReadingData> {
-  // Extract the year from the date (e.g. "2025" from "2025-01-13")
-  const year = date.substring(0, 4);
-
   try {
-    // Use different base paths for dev and prod
-    const basePath = import.meta.env.DEV ? '' : '/bible-reading-plan';
-    const dataUrl = `${basePath}/data/${year}/${date}.json`;
+    const dataUrl = getDataPath(date);
     console.log('Fetching data from:', dataUrl);
 
     const response = await fetch(dataUrl);
     console.log('Response status:', response.status);
 
     if (!response.ok) {
-      const text = await response.text();
-      console.error('Response text:', text);
       throw new Error(
         `Failed to load reading data: ${response.status} ${response.statusText}`,
       );
     }
 
-    const text = await response.text();
-    console.log('Response text preview:', text.substring(0, 200) + '...');
-
-    const data = JSON.parse(text);
+    const data = await response.json();
     return data;
   } catch (err: any) {
     console.error('Error fetching data:', err);

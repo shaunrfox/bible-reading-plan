@@ -14,26 +14,14 @@ export default defineConfig({
       },
     ],
   },
-  base: '/',
-  ...(process.env.GH_REPO
-    ? {}
-    : {
-        build: {
-          lib: {
-            name: 'okShaunComponents',
-            fileName: (format) => `ok-shaun-components.${format}.js`,
-            entry: './src/main.tsx',
-            formats: ['es'],
-          },
-          rollupOptions: {
-            external: ['react', 'react-dom', 'react/jsx-runtime'],
-            output: {
-              globals: {
-                react: 'React',
-                'react-dom': 'ReactDOM',
-              },
-            },
-          },
-        },
-      }),
+  base: '/bible-reading-plan/',
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+  },
+  server: {
+    fs: {
+      allow: ['..'],
+    },
+  },
 });

@@ -160,7 +160,6 @@ function App() {
             w: 'full',
           })}
         >
-          <Box>hello</Box>
           <AppHeader />
           <DateNav />
           <Box className={css({ mt: '8' })}>

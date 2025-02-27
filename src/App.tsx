@@ -114,7 +114,8 @@ function App() {
 
     // If we're at the root or just /#, redirect to today's date
     const today = format_(getToday(), 'path');
-    navigate(`${basename}/${today}`, { replace: true });
+    // Use hash-based navigation without the basename
+    navigate(`/${today}`, { replace: true });
   }, [navigate]);
 
   // Fetch data effect
@@ -134,6 +135,7 @@ function App() {
       if (!urlDate) {
         // Add this fallback for when no date is in the URL
         const today = format_(getToday(), 'path');
+        // Use hash-based navigation without the basename
         navigate(`/${today}`, { replace: true });
         return;
       }
@@ -145,6 +147,7 @@ function App() {
         const fetchData = async () => {
           try {
             const formattedDate = format_(date, 'path');
+            // Use basename only for data fetching, not for navigation
             const data = await getDailyReading(formattedDate);
             setFetchedData(data);
           } catch (err) {
@@ -163,6 +166,7 @@ function App() {
       setError('Invalid date');
       // You could also add a fallback here for invalid dates
       const today = format_(getToday(), 'path');
+      // Use hash-based navigation without the basename
       navigate(`/${today}`, { replace: true });
     }
   }, [location]);
@@ -178,7 +182,6 @@ function App() {
             w: 'full',
           })}
         >
-          <Box>hello</Box>
           <AppHeader />
           <DateNav />
           <Box className={css({ mt: '8' })}>
