@@ -1,0 +1,82 @@
+.scripture-wrapper {
+  width: 100%;
+  font-family: var(--fonts-serif);
+  height: fit-content;
+
+  .text-html {
+    padding-bottom: 100px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--fonts-sans);
+
+    span,
+    span.text {
+      color: currentColor;
+      font-weight: inherit;
+    }
+  }
+
+  h3,
+  h3 span {
+    font-size: var(--font-sizes-20);
+  }
+
+  p + h3 {
+    margin-top: var(--sizes-24);
+  }
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  opacity: 0.5;
+}
+
+.chapternum {
+  font-family: var(--fonts-sans);
+  font-size: 85%;
+  opacity: 0.5;
+}
+
+.asterisk {
+  font-size: 1.25em;
+  vertical-align: bottom;
+  line-height: 0.6;
+  margin-left: 4px;
+}
+
+.psalm {
+  p {
+    margin-bottom: 0.25rem;
+  }
+
+  h3 {
+    text-align: left;
+    display: block;
+    margin: 0;
+    padding-top: 1rem;
+  }
+}
+
+.indent,
+.indent-1 {
+  margin: 0 0 0 1.5em;
+}
+
+/* .indent-1-breaks {
+  margin: 0 0 0 1em;
+} */
+
+.hanging-indent {
+  text-indent: -1em;
+  margin-left: 1em;
+}

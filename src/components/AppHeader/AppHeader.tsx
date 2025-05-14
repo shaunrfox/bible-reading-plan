@@ -17,7 +17,7 @@ export function AppHeader({ season }: AppHeaderProps) {
     <header className={pageHeaderStyles}>
       <a href={`#/`}>
         <Heading as={'h1'} className={pageTitleStyles}>
-          Daily Readings
+          Daily Scripture
         </Heading>
       </a>
 

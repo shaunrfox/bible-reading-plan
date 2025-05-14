@@ -12,6 +12,7 @@ import { createDate, format_, getToday } from '~/utils/dateHelpers';
 import { getDailyReading, type ReadingData } from '~/utils/api_local';
 import { Divider, VStack } from '@styled-system/jsx';
 import { formatReference } from '~/utils/formatReference';
+import { Scripture } from '~/components/Scripture';
 
 // Add this constant
 const basename = import.meta.env.DEV ? '' : '/bible-reading-plan';
@@ -19,12 +20,28 @@ const basename = import.meta.env.DEV ? '' : '/bible-reading-plan';
 function ReadingItem({
   label,
   reference,
+  onClick,
 }: {
   label: string;
   reference: string;
+  onClick: () => void;
 }) {
   return (
-    <VStack mb={'20'} gap={'0'} alignItems={'flex-start'}>
+    <VStack
+      mb={'20'}
+      gap={'0'}
+      alignItems={'flex-start'}
+      onClick={onClick}
+      cursor={'pointer'}
+      className={css({
+        '&:hover': {
+          bg: { base: 'gray.5', _dark: 'gray.90' },
+          outline: '8px solid',
+          outlineColor: { base: 'gray.5', _dark: 'gray.90' },
+          borderRadius: '1',
+        },
+      })}
+    >
       <Text
         family={'mono'}
         textTransform={'uppercase'}
@@ -171,6 +188,17 @@ function App() {
     }
   }, [location]);
 
+  // Set Scripture Reference
+  const [scriptureReference, setScriptureReference] = useState<string>('');
+  const [scriptureText, setScriptureText] = useState<string>('');
+  const handleScriptureClose = () => {
+    setScriptureReference('');
+  };
+  const handleScriptureOpen = (reference: string, text: string) => {
+    setScriptureReference(reference);
+    setScriptureText(text);
+  };
+
   if (error) {
     return (
       <ThemeProvider>
@@ -256,7 +284,7 @@ function App() {
             })}
           >
             <Heading as="h3" fontSize={'16'}>
-              Morning Prayer
+              Morning
             </Heading>
             <Divider
               my={'16'}
@@ -265,14 +293,32 @@ function App() {
             <ReadingItem
               label="The Psalms"
               reference={morning_scripture[1]?.full.citation}
+              onClick={() =>
+                handleScriptureOpen(
+                  morning_scripture[1]?.full.citation,
+                  morning_scripture[1]?.full.text,
+                )
+              }
             />
             <ReadingItem
               label="Reading 1"
               reference={morning_scripture[2]?.full.citation}
+              onClick={() =>
+                handleScriptureOpen(
+                  morning_scripture[2]?.full.citation,
+                  morning_scripture[2]?.full.text,
+                )
+              }
             />
             <ReadingItem
               label="Reading 2"
               reference={morning_scripture[3]?.full.citation}
+              onClick={() =>
+                handleScriptureOpen(
+                  morning_scripture[3]?.full.citation,
+                  morning_scripture[3]?.full.text,
+                )
+              }
             />
           </Box>
 
@@ -286,7 +332,7 @@ function App() {
             })}
           >
             <Heading as="h3" fontSize={'16'}>
-              Evening Prayer
+              Evening
             </Heading>
             <Divider
               my={'16'}
@@ -295,18 +341,43 @@ function App() {
             <ReadingItem
               label="The Psalms"
               reference={evening_scripture[1]?.full.citation}
+              onClick={() =>
+                handleScriptureOpen(
+                  evening_scripture[1]?.full.citation,
+                  evening_scripture[1]?.full.text,
+                )
+              }
             />
             <ReadingItem
               label="Reading 1"
               reference={evening_scripture[2]?.full.citation}
+              onClick={() =>
+                handleScriptureOpen(
+                  evening_scripture[2]?.full.citation,
+                  evening_scripture[2]?.full.text,
+                )
+              }
             />
             <ReadingItem
               label="Reading 2"
               reference={evening_scripture[3]?.full.citation}
+              onClick={() =>
+                handleScriptureOpen(
+                  evening_scripture[3]?.full.citation,
+                  evening_scripture[3]?.full.text,
+                )
+              }
             />
           </Box>
         </Box>
       </Box>
+      {scriptureReference && (
+        <Scripture
+          reference={scriptureReference}
+          text={scriptureText}
+          onClose={handleScriptureClose}
+        />
+      )}
     </ThemeProvider>
   );
 }

@@ -1,3 +1,4 @@
+import { text } from '@styled-system/recipes';
 import { getDataPath } from './assetPaths';
 
 /**
@@ -7,7 +8,10 @@ export interface ReadingData {
   services: {
     [key: string]: {
       readings: Array<{
-        full: { citation: string };
+        full: {
+          citation: string;
+          text: string;
+        };
       }>;
     };
   };
