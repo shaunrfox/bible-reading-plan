@@ -22,6 +22,9 @@ export const wrapper = css({
   // alignItems: 'center',
   width: 'full',
   padding: '24',
+  '@media (max-width: 640px)': {
+    padding: '0',
+  },
 });
 
 export const scrim = css({
@@ -44,6 +47,10 @@ export const container = css({
   boxShadow: 'high',
   zIndex: '2',
   margin: 'auto',
+  '@media (max-width: 640px)': {
+    maxH: 'full',
+    borderRadius: '0',
+  },
 });
 
 export const header = css({
@@ -55,6 +62,9 @@ export const header = css({
   py: '16',
   borderBottom: '1px solid',
   borderColor: { base: 'gray.5', _dark: 'gray.80' },
+  '@media (max-width: 640px)': {
+    px: '24',
+  },
 });
 
 export const body = css({
@@ -67,6 +77,9 @@ export const body = css({
   overflowY: 'auto',
   height: 'fit',
   mb: '8',
+  '@media (max-width: 640px)': {
+    px: '24',
+  },
 });
 
 export const footer = css({
